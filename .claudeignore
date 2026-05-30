@@ -1,0 +1,35 @@
+# 忽略 Gradle 构建生成目录（最重要）
+**/build/
+build/
+
+# 忽略 IDE 和构建工具的本地缓存
+.gradle/
+.idea/
+
+# 忽略本地环境配置文件
+local.properties
+
+# 忽略打包生成的 APK/AAB 文件
+*.apk
+*.aab
+
+# 忽略系统生成文件
+*.iml
+.DS_Store
+
+# 签名/密钥文件
+*.keystore
+*.jks
+*.jks.bk
+
+# 崩溃转储和日志
+*.hprof
+*.log
+*.crash
+*.trace
+
+# 合并冲突备份
+*.orig
+
+# Fastlane
+fastlane/

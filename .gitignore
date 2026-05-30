@@ -1,0 +1,43 @@
+*.iml
+.gradle
+/local.properties
+.idea/
+.DS_Store
+build/
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Android generated files
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+
+# Signing & keystores
+*.keystore
+*.jks
+*.jks.bk
+
+# OS files
+*.hprof
+*.log
+
+# Merge conflict backups
+*.orig
+
+# Crash dumps
+*.crash
+*.trace
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Lint & reports
+lint/
+reports/
