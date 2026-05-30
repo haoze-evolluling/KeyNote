@@ -27,6 +27,7 @@ import android.content.ClipData
 
 import java.text.SimpleDateFormat
 import java.util.*
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,6 +39,7 @@ fun TagNotesScreen(
     onNavigateToEdit: (Long?) -> Unit,
     viewModel: HomeViewModel = viewModel()
 ) {
+    val colors = LocalAppColors.current
     val allNotes by viewModel.notes.collectAsState()
     var showActionDialogForNote by remember { mutableStateOf<Long?>(null) }
     var showDeleteConfirm by remember { mutableStateOf<Long?>(null) }
@@ -78,7 +80,7 @@ fun TagNotesScreen(
                 Text(
                     "该标签下暂无笔记",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.outline
+                    color = colors.outline
                 )
             }
         } else {
@@ -208,7 +210,7 @@ fun TagNotesScreen(
                 TextButton(onClick = {
                     showDeleteConfirm?.let { viewModel.deleteNote(it) }
                     showDeleteConfirm = null
-                }) { Text("删除", color = MaterialTheme.colorScheme.error) }
+                }) { Text("删除", color = colors.error) }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteConfirm = null }) { Text("取消") }
@@ -226,18 +228,18 @@ fun TagNotesScreen(
                 title = { Text("笔记详情") },
                 text = {
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text("标题", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.outline)
+                        Text("标题", style = MaterialTheme.typography.labelMedium, color = colors.outline)
                         Text(note.note.title.ifBlank { "无标题" }, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
-                        Text("创建时间", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.outline)
+                        Text("创建时间", style = MaterialTheme.typography.labelMedium, color = colors.outline)
                         Text(dateFormat.format(Date(note.note.createdAt)), style = MaterialTheme.typography.bodyMedium)
-                        Text("更新时间", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.outline)
+                        Text("更新时间", style = MaterialTheme.typography.labelMedium, color = colors.outline)
                         Text(dateFormat.format(Date(note.note.updatedAt)), style = MaterialTheme.typography.bodyMedium)
                         if (note.tags.isNotEmpty()) {
-                            Text("标签", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.outline)
+                            Text("标签", style = MaterialTheme.typography.labelMedium, color = colors.outline)
                             Text(note.tags.joinToString(", ") { "#${it.name}" }, style = MaterialTheme.typography.bodyMedium)
                         }
                         if (note.note.content.isNotBlank()) {
-                            Text("内容预览", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.outline)
+                            Text("内容预览", style = MaterialTheme.typography.labelMedium, color = colors.outline)
                             Text(
                                 note.note.content.take(100) + if (note.note.content.length > 100) "..." else "",
                                 style = MaterialTheme.typography.bodyMedium, maxLines = 3, overflow = TextOverflow.Ellipsis
@@ -290,7 +292,7 @@ fun TagNotesScreen(
             title = { Text("管理标签") },
             text = {
                 if (note == null || note.tags.isEmpty()) {
-                    Text("暂无标签", color = MaterialTheme.colorScheme.outline)
+                    Text("暂无标签", color = colors.outline)
                 } else {
                     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         note.tags.forEach { tag ->
@@ -301,7 +303,7 @@ fun TagNotesScreen(
                             ) {
                                 Text("#${tag.name}", style = MaterialTheme.typography.bodyMedium)
                                 TextButton(onClick = { viewModel.removeTagFromNote(note.note.id, tag.id) }) {
-                                    Text("移除", color = MaterialTheme.colorScheme.error)
+                                    Text("移除", color = colors.error)
                                 }
                             }
                         }
