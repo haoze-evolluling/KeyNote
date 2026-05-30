@@ -1,6 +1,8 @@
 package com.haoze.keynote.ui.theme
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.darkColorScheme
 
 object AppColorPalette {
     val Light = AppColors(
@@ -71,5 +73,45 @@ object AppColorPalette {
             Color(0xFF00497D), // 容器色
             Color(0xFF938F99)  // 中性色
         )
+    )
+}
+
+fun AppColors.toMaterialColorScheme() = if (this == AppColorPalette.Light) {
+    lightColorScheme(
+        primary = primary,
+        onPrimary = onPrimary,
+        primaryContainer = primaryContainer,
+        onPrimaryContainer = onPrimaryContainer,
+        surface = surface,
+        onSurface = onSurface,
+        surfaceVariant = surfaceVariant,
+        onSurfaceVariant = onSurfaceVariant,
+        error = error,
+        onError = onError,
+        errorContainer = errorContainer,
+        onErrorContainer = onErrorContainer,
+        outline = outline,
+        outlineVariant = outlineVariant,
+        background = background,
+        onBackground = onBackground
+    )
+} else {
+    darkColorScheme(
+        primary = primary,
+        onPrimary = onPrimary,
+        primaryContainer = primaryContainer,
+        onPrimaryContainer = onPrimaryContainer,
+        surface = surface,
+        onSurface = onSurface,
+        surfaceVariant = surfaceVariant,
+        onSurfaceVariant = onSurfaceVariant,
+        error = error,
+        onError = onError,
+        errorContainer = errorContainer,
+        onErrorContainer = onErrorContainer,
+        outline = outline,
+        outlineVariant = outlineVariant,
+        background = background,
+        onBackground = onBackground
     )
 }
