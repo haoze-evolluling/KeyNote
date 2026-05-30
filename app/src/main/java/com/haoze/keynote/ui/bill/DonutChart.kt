@@ -15,31 +15,33 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.haoze.keynote.data.db.entity.CategorySpending
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @Composable
 fun DonutChart(
     data: List<CategorySpending>,
     modifier: Modifier = Modifier
 ) {
+    val colors = LocalAppColors.current
     val total = data.sumOf { it.total }
     if (total <= 0.0 || data.isEmpty()) {
         Box(modifier = modifier, contentAlignment = Alignment.Center) {
-            Text("暂无数据", color = MaterialTheme.colorScheme.outline)
+            Text("暂无数据", color = colors.outline)
         }
         return
     }
 
     val chartColors = listOf(
-        MaterialTheme.colorScheme.primary,
-        MaterialTheme.colorScheme.secondary,
-        MaterialTheme.colorScheme.tertiary,
-        MaterialTheme.colorScheme.error,
-        MaterialTheme.colorScheme.primaryContainer,
-        MaterialTheme.colorScheme.secondaryContainer,
-        MaterialTheme.colorScheme.tertiaryContainer,
-        MaterialTheme.colorScheme.errorContainer,
-        MaterialTheme.colorScheme.outline,
-        MaterialTheme.colorScheme.outlineVariant,
+        colors.primary,
+        colors.secondary,
+        colors.tertiary,
+        colors.error,
+        colors.primaryContainer,
+        colors.secondaryContainer,
+        colors.tertiaryContainer,
+        colors.errorContainer,
+        colors.outline,
+        colors.outlineVariant,
     )
 
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
@@ -81,7 +83,7 @@ fun DonutChart(
                 Text(
                     "总计",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.outline
+                    color = colors.outline
                 )
             }
         }
@@ -115,7 +117,7 @@ fun DonutChart(
                 Text(
                     "${String.format("%.1f", percent)}%",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.outline
+                    color = colors.outline
                 )
             }
         }
