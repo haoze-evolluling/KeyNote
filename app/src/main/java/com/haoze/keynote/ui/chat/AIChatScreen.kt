@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.haoze.keynote.R
+import com.haoze.keynote.ui.theme.LocalAppColors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -40,6 +41,7 @@ fun AIChatScreen(
     viewModel: AIChatViewModel = viewModel(),
     onCreateNote: (Long) -> Unit = {}
 ) {
+    val colors = LocalAppColors.current
     val messages by viewModel.messages.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val isCreatingBill by viewModel.isCreatingBill.collectAsState()
@@ -69,10 +71,10 @@ fun AIChatScreen(
 
     val gradientBrush = Brush.verticalGradient(
         colors = listOf(
-            MaterialTheme.colorScheme.surface,
-            MaterialTheme.colorScheme.surface,
-            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.6f)
+            colors.surface,
+            colors.surface,
+            colors.surfaceVariant.copy(alpha = 0.5f),
+            colors.surfaceVariant.copy(alpha = 0.6f)
         )
     )
 
@@ -82,7 +84,7 @@ fun AIChatScreen(
             TopAppBar(
                 title = { Text("AI 对话") },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface
+                    containerColor = colors.surface
                 ),
                 navigationIcon = {
                     IconButton(onClick = { scope.launch { drawerState.open() } }) {
@@ -103,7 +105,7 @@ fun AIChatScreen(
                         Text(
                             "创建笔记",
                             style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = colors.onSurfaceVariant
                         )
                     }
                     Spacer(modifier = Modifier.width(4.dp))
@@ -114,7 +116,7 @@ fun AIChatScreen(
                         Text(
                             "新对话",
                             style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = colors.onSurfaceVariant
                         )
                     }
                     Spacer(modifier = Modifier.width(8.dp))
@@ -126,7 +128,7 @@ fun AIChatScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(MaterialTheme.colorScheme.surface)
+                .background(colors.surface)
         ) {
             if (messages.isEmpty()) {
                 Box(
@@ -146,13 +148,13 @@ fun AIChatScreen(
                             "准备就绪，这就开始",
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.Medium,
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = colors.onSurface
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             "输入消息开始与 AI 对话",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.outline
+                            color = colors.outline
                         )
                     }
                 }
@@ -178,14 +180,14 @@ fun AIChatScreen(
                                     modifier = Modifier
                                         .size(28.dp)
                                         .clip(CircleShape)
-                                        .background(MaterialTheme.colorScheme.tertiaryContainer),
+                                        .background(colors.tertiaryContainer),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
                                         Icons.Outlined.AutoAwesome,
                                         contentDescription = null,
                                         modifier = Modifier.size(18.dp),
-                                        tint = MaterialTheme.colorScheme.onTertiaryContainer
+                                        tint = colors.onTertiaryContainer
                                     )
                                 }
                                 Spacer(modifier = Modifier.width(6.dp))
@@ -193,8 +195,8 @@ fun AIChatScreen(
 
                             Surface(
                                 shape = MaterialTheme.shapes.medium,
-                                color = if (isUser) MaterialTheme.colorScheme.primaryContainer
-                                        else MaterialTheme.colorScheme.surfaceVariant,
+                                color = if (isUser) colors.primaryContainer
+                                        else colors.surfaceVariant,
                                 tonalElevation = 1.dp,
                                 modifier = Modifier.widthIn(max = 300.dp)
                             ) {
@@ -207,7 +209,7 @@ fun AIChatScreen(
                                     if (!isUser && (message.isBillRelated || message.isScheduleRelated)) {
                                         HorizontalDivider(
                                             modifier = Modifier.padding(horizontal = 12.dp),
-                                            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f)
+                                            color = colors.outlineVariant.copy(alpha = 0.3f)
                                         )
                                         Row(
                                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
@@ -253,14 +255,14 @@ fun AIChatScreen(
                                     modifier = Modifier
                                         .size(28.dp)
                                         .clip(CircleShape)
-                                        .background(MaterialTheme.colorScheme.primaryContainer),
+                                        .background(colors.primaryContainer),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
                                         Icons.Outlined.AutoAwesome,
                                         contentDescription = null,
                                         modifier = Modifier.size(18.dp),
-                                        tint = MaterialTheme.colorScheme.onTertiaryContainer
+                                        tint = colors.onTertiaryContainer
                                     )
                                 }
                             }
@@ -273,20 +275,20 @@ fun AIChatScreen(
                                     modifier = Modifier
                                         .size(28.dp)
                                         .clip(CircleShape)
-                                        .background(MaterialTheme.colorScheme.tertiaryContainer),
+                                        .background(colors.tertiaryContainer),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
                                         Icons.Outlined.AutoAwesome,
                                         contentDescription = null,
                                         modifier = Modifier.size(18.dp),
-                                        tint = MaterialTheme.colorScheme.onTertiaryContainer
+                                        tint = colors.onTertiaryContainer
                                     )
                                 }
                                 Spacer(modifier = Modifier.width(6.dp))
                                 Surface(
                                     shape = MaterialTheme.shapes.medium,
-                                    color = MaterialTheme.colorScheme.surfaceVariant,
+                                    color = colors.surfaceVariant,
                                     tonalElevation = 1.dp
                                 ) {
                                     Row(
@@ -296,13 +298,13 @@ fun AIChatScreen(
                                         CircularProgressIndicator(
                                             modifier = Modifier.size(16.dp),
                                             strokeWidth = 2.dp,
-                                            color = MaterialTheme.colorScheme.primary
+                                            color = colors.primary
                                         )
                                         Spacer(modifier = Modifier.width(8.dp))
                                         Text(
                                             "思考中...",
                                             style = MaterialTheme.typography.bodyMedium,
-                                            color = MaterialTheme.colorScheme.outline
+                            color = colors.outline
                                         )
                                     }
                                 }
@@ -325,11 +327,11 @@ fun AIChatScreen(
                     )
                     .border(
                         width = 1.dp,
-                        color = MaterialTheme.colorScheme.outlineVariant,
+                        color = colors.outlineVariant,
                         shape = RoundedCornerShape(28.dp)
                     ),
                 shape = RoundedCornerShape(28.dp),
-                color = MaterialTheme.colorScheme.surface,
+                color = colors.surface,
                 tonalElevation = 0.dp
             ) {
                 Row(
@@ -345,7 +347,7 @@ fun AIChatScreen(
                         Icon(
                             Icons.Default.Add,
                             contentDescription = "添加",
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            tint = colors.onSurfaceVariant
                         )
                     }
 
@@ -356,7 +358,7 @@ fun AIChatScreen(
                         placeholder = {
                             Text(
                                 "问问 KeyNote",
-                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                                color = colors.onSurfaceVariant.copy(alpha = 0.6f)
                             )
                         },
                         singleLine = true,
@@ -381,8 +383,8 @@ fun AIChatScreen(
                         enabled = !isLoading && inputText.isNotBlank(),
                         modifier = Modifier.size(40.dp),
                         colors = IconButtonDefaults.filledIconButtonColors(
-                            containerColor = MaterialTheme.colorScheme.primary,
-                            contentColor = MaterialTheme.colorScheme.onPrimary
+                            containerColor = colors.primary,
+                            contentColor = colors.onPrimary
                         )
                     ) {
                         Icon(
@@ -411,18 +413,18 @@ fun AIChatScreen(
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Text("消费项目", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.outline)
+                        Text("消费项目", style = MaterialTheme.typography.labelMedium, color = colors.outline)
                         Text(bill.item, style = MaterialTheme.typography.bodyMedium)
-                        Text("金额", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.outline)
+                        Text("金额", style = MaterialTheme.typography.labelMedium, color = colors.outline)
                         Text("¥${String.format("%.2f", bill.amount)}", style = MaterialTheme.typography.bodyMedium)
-                        Text("时间", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.outline)
+                        Text("时间", style = MaterialTheme.typography.labelMedium, color = colors.outline)
                         Text(
                             java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault())
                                 .format(java.util.Date(bill.date)),
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
-                    Text("类别", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.outline)
+                    Text("类别", style = MaterialTheme.typography.labelMedium, color = colors.outline)
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp)
