@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.haoze.keynote.data.db.entity.DailySpending
 import com.haoze.keynote.data.db.entity.MonthlySpending
 import com.haoze.keynote.data.db.entity.WeeklySpending
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 interface ChartPoint {
     val label: String
@@ -45,17 +46,18 @@ fun LineChart(
     data: List<ChartPoint>,
     modifier: Modifier = Modifier
 ) {
+    val colors = LocalAppColors.current
     if (data.isEmpty()) {
         Box(modifier = modifier) {
-            Text("暂无数据", color = MaterialTheme.colorScheme.outline)
+            Text("暂无数据", color = colors.outline)
         }
         return
     }
 
-    val lineColor = MaterialTheme.colorScheme.primary
-    val gridColor = MaterialTheme.colorScheme.outlineVariant
-    val textColor = MaterialTheme.colorScheme.outline
-    val surfaceColor = MaterialTheme.colorScheme.surface
+    val lineColor = colors.primary
+    val gridColor = colors.outlineVariant
+    val textColor = colors.outline
+    val surfaceColor = colors.surface
 
     val paddingLeftDp = 60.dp
     val paddingRightDp = 16.dp
