@@ -42,6 +42,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.haoze.keynote.R
 import com.haoze.keynote.data.db.entity.TagEntity
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 internal sealed class DrawerItem {
     data class Nav(
@@ -90,6 +91,7 @@ internal fun AppDrawerContent(
     onNavigateToTag: (Long, String) -> Unit,
     onCloseDrawer: () -> Unit,
 ) {
+    val colors = LocalAppColors.current
     val isTagSelected = currentRoute?.startsWith("tag_notes/") == true
     var expandedGroups by remember { mutableStateOf(setOf<String>()) }
 
@@ -154,6 +156,7 @@ internal fun AppDrawerContent(
 
 @Composable
 private fun DrawerHeader() {
+    val colors = LocalAppColors.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -176,7 +179,7 @@ private fun DrawerHeader() {
             Text(
                 "个人管理工具",
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline
+                color = colors.outline
             )
         }
     }
@@ -190,6 +193,7 @@ private fun DrawerGroupItem(
     isSelected: Boolean,
     onToggle: () -> Unit,
 ) {
+    val colors = LocalAppColors.current
     val arrowRotation by animateFloatAsState(
         targetValue = if (isExpanded) 90f else 0f,
         animationSpec = tween(durationMillis = 200),
@@ -208,8 +212,8 @@ private fun DrawerGroupItem(
         Icon(
             icon,
             contentDescription = label,
-            tint = if (isSelected) MaterialTheme.colorScheme.primary
-                   else MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = if (isSelected) colors.primary
+                   else colors.onSurfaceVariant,
             modifier = Modifier.size(22.dp)
         )
 
@@ -217,8 +221,8 @@ private fun DrawerGroupItem(
 
         Text(
             label,
-            color = if (isSelected) MaterialTheme.colorScheme.primary
-                    else MaterialTheme.colorScheme.onSurface,
+            color = if (isSelected) colors.primary
+                    else colors.onSurface,
             fontWeight = if (isSelected || isExpanded) FontWeight.SemiBold else FontWeight.Normal,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f)
@@ -230,7 +234,7 @@ private fun DrawerGroupItem(
             modifier = Modifier
                 .size(20.dp)
                 .rotate(arrowRotation),
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
+            tint = colors.onSurfaceVariant
         )
         Spacer(Modifier.width(16.dp))
     }
@@ -242,6 +246,7 @@ private fun DrawerNavItem(
     isSelected: Boolean,
     onClick: () -> Unit,
 ) {
+    val colors = LocalAppColors.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -256,7 +261,7 @@ private fun DrawerNavItem(
                 .width(3.dp)
                 .height(if (isSelected) 24.dp else 0.dp)
                 .background(
-                    color = if (isSelected) MaterialTheme.colorScheme.primary
+                    color = if (isSelected) colors.primary
                             else Color.Transparent
                 )
         )
@@ -266,8 +271,8 @@ private fun DrawerNavItem(
         Icon(
             item.icon,
             contentDescription = item.label,
-            tint = if (isSelected) MaterialTheme.colorScheme.primary
-                   else MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = if (isSelected) colors.primary
+                   else colors.onSurfaceVariant,
             modifier = Modifier.size(22.dp)
         )
 
@@ -275,8 +280,8 @@ private fun DrawerNavItem(
 
         Text(
             item.label,
-            color = if (isSelected) MaterialTheme.colorScheme.primary
-                    else MaterialTheme.colorScheme.onSurface,
+            color = if (isSelected) colors.primary
+                    else colors.onSurface,
             fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
             style = MaterialTheme.typography.bodyLarge
         )
@@ -291,6 +296,7 @@ private fun DrawerTagsItem(
     onToggle: () -> Unit,
     onTagClick: (TagEntity) -> Unit,
 ) {
+    val colors = LocalAppColors.current
     val arrowRotation by animateFloatAsState(
         targetValue = if (isExpanded) 90f else 0f,
         animationSpec = tween(durationMillis = 200),
@@ -311,7 +317,7 @@ private fun DrawerTagsItem(
                 .width(3.dp)
                 .height(if (isSelected) 24.dp else 0.dp)
                 .background(
-                    color = if (isSelected) MaterialTheme.colorScheme.primary
+                    color = if (isSelected) colors.primary
                             else Color.Transparent
                 )
         )
@@ -321,8 +327,8 @@ private fun DrawerTagsItem(
         Icon(
             Icons.Default.Label,
             contentDescription = "标签分类",
-            tint = if (isSelected) MaterialTheme.colorScheme.primary
-                   else MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = if (isSelected) colors.primary
+                   else colors.onSurfaceVariant,
             modifier = Modifier.size(22.dp)
         )
 
@@ -330,8 +336,8 @@ private fun DrawerTagsItem(
 
         Text(
             "标签分类",
-            color = if (isSelected) MaterialTheme.colorScheme.primary
-                    else MaterialTheme.colorScheme.onSurface,
+            color = if (isSelected) colors.primary
+                    else colors.onSurface,
             fontWeight = if (isSelected || isExpanded) FontWeight.SemiBold else FontWeight.Normal,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f)
@@ -343,7 +349,7 @@ private fun DrawerTagsItem(
             modifier = Modifier
                 .size(20.dp)
                 .rotate(arrowRotation),
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
+            tint = colors.onSurfaceVariant
         )
         Spacer(Modifier.width(16.dp))
     }
@@ -358,7 +364,7 @@ private fun DrawerTagsItem(
                 Text(
                     "暂无标签",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.outline,
+                    color = colors.outline,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
                 )
             } else {
@@ -375,13 +381,13 @@ private fun DrawerTagsItem(
                             Icons.Default.Label,
                             contentDescription = tag.name,
                             modifier = Modifier.size(18.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            tint = colors.onSurfaceVariant
                         )
                         Spacer(Modifier.width(12.dp))
                         Text(
                             "#${tag.name}",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface
+                            color = colors.onSurface
                         )
                     }
                 }
