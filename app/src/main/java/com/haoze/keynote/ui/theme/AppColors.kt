@@ -11,6 +11,12 @@ data class AppColors(
     val primaryContainer: Color,
     val onPrimaryContainer: Color,
     
+    // 次要色
+    val secondary: Color,
+    val onSecondary: Color,
+    val secondaryContainer: Color,
+    val onSecondaryContainer: Color,
+    
     // 表面色
     val surface: Color,
     val onSurface: Color,
@@ -22,6 +28,12 @@ data class AppColors(
     val onError: Color,
     val errorContainer: Color,
     val onErrorContainer: Color,
+    
+    // 第三色
+    val tertiary: Color,
+    val onTertiary: Color,
+    val tertiaryContainer: Color,
+    val onTertiaryContainer: Color,
     
     // 中性色
     val outline: Color,

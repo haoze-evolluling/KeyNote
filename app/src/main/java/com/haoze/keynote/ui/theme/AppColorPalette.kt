@@ -12,6 +12,12 @@ object AppColorPalette {
         primaryContainer = Color(0xFFD1E4FF),
         onPrimaryContainer = Color(0xFF001D36),
         
+        // 次要色
+        secondary = Color(0xFF535F70),
+        onSecondary = Color.White,
+        secondaryContainer = Color(0xFFD7E3F7),
+        onSecondaryContainer = Color(0xFF101C2B),
+        
         // 表面色
         surface = Color(0xFFFDFCFF),
         onSurface = Color(0xFF1A1C1E),
@@ -23,6 +29,12 @@ object AppColorPalette {
         onError = Color.White,
         errorContainer = Color(0xFFFFDAD6),
         onErrorContainer = Color(0xFF410002),
+        
+        // 第三色
+        tertiary = Color(0xFF7C5800),
+        onTertiary = Color.White,
+        tertiaryContainer = Color(0xFFFFDEA1),
+        onTertiaryContainer = Color(0xFF261A00),
         
         // 中性色
         outline = Color(0xFF79747E),
@@ -47,6 +59,12 @@ object AppColorPalette {
         primaryContainer = Color(0xFF00497D),
         onPrimaryContainer = Color(0xFFD1E4FF),
         
+        // 次要色
+        secondary = Color(0xFFBBC7DB),
+        onSecondary = Color(0xFF253140),
+        secondaryContainer = Color(0xFF3B4858),
+        onSecondaryContainer = Color(0xFFD7E3F7),
+        
         // 表面色
         surface = Color(0xFF1A1C1E),
         onSurface = Color(0xFFE3E2E6),
@@ -58,6 +76,12 @@ object AppColorPalette {
         onError = Color(0xFF690005),
         errorContainer = Color(0xFF93000A),
         onErrorContainer = Color(0xFFFFDAD6),
+        
+        // 第三色
+        tertiary = Color(0xFFFFBE2E),
+        onTertiary = Color(0xFF3F2E00),
+        tertiaryContainer = Color(0xFF5A4300),
+        onTertiaryContainer = Color(0xFFFFDEA1),
         
         // 中性色
         outline = Color(0xFF938F99),
@@ -82,6 +106,10 @@ fun AppColors.toMaterialColorScheme() = if (this == AppColorPalette.Light) {
         onPrimary = onPrimary,
         primaryContainer = primaryContainer,
         onPrimaryContainer = onPrimaryContainer,
+        secondary = secondary,
+        onSecondary = onSecondary,
+        secondaryContainer = secondaryContainer,
+        onSecondaryContainer = onSecondaryContainer,
         surface = surface,
         onSurface = onSurface,
         surfaceVariant = surfaceVariant,
@@ -90,6 +118,10 @@ fun AppColors.toMaterialColorScheme() = if (this == AppColorPalette.Light) {
         onError = onError,
         errorContainer = errorContainer,
         onErrorContainer = onErrorContainer,
+        tertiary = tertiary,
+        onTertiary = onTertiary,
+        tertiaryContainer = tertiaryContainer,
+        onTertiaryContainer = onTertiaryContainer,
         outline = outline,
         outlineVariant = outlineVariant,
         background = background,
@@ -101,6 +133,10 @@ fun AppColors.toMaterialColorScheme() = if (this == AppColorPalette.Light) {
         onPrimary = onPrimary,
         primaryContainer = primaryContainer,
         onPrimaryContainer = onPrimaryContainer,
+        secondary = secondary,
+        onSecondary = onSecondary,
+        secondaryContainer = secondaryContainer,
+        onSecondaryContainer = onSecondaryContainer,
         surface = surface,
         onSurface = onSurface,
         surfaceVariant = surfaceVariant,
@@ -109,6 +145,10 @@ fun AppColors.toMaterialColorScheme() = if (this == AppColorPalette.Light) {
         onError = onError,
         errorContainer = errorContainer,
         onErrorContainer = onErrorContainer,
+        tertiary = tertiary,
+        onTertiary = onTertiary,
+        tertiaryContainer = tertiaryContainer,
+        onTertiaryContainer = onTertiaryContainer,
         outline = outline,
         outlineVariant = outlineVariant,
         background = background,
