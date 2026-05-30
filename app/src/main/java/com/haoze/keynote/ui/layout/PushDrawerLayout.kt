@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 /**
  * 推拉式侧边栏布局（Push Drawer）。
@@ -63,6 +64,7 @@ fun PushDrawerLayout(
     drawerContent: @Composable () -> Unit,
     content: @Composable () -> Unit,
 ) {
+    val colors = LocalAppColors.current
     val scope = rememberCoroutineScope()
     val density = LocalDensity.current
     val drawerWidthPx = with(density) { drawerWidth.toPx() }
@@ -174,7 +176,7 @@ fun PushDrawerLayout(
             modifier = Modifier
                 .offset(x = with(density) { offsetPx.value.toDp() })
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surface)
+                .background(colors.surface)
         ) {
             // 内层 Box：根据推拉进度实时缩放（1.0 → 0.88），锚点居左，形成"被推远"的视觉
             Box(
@@ -202,7 +204,7 @@ fun PushDrawerLayout(
             ModalDrawerSheet(
                 modifier = Modifier.fillMaxSize(),
                 drawerShape = drawerShape,
-                drawerContainerColor = MaterialTheme.colorScheme.surface
+                drawerContainerColor = colors.surface
             ) {
                 drawerContent()
             }
