@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -36,6 +37,7 @@ fun ScheduleScreen(
     scope: CoroutineScope,
     viewModel: ScheduleViewModel
 ) {
+    val colors = LocalAppColors.current
     val schedules by viewModel.schedules.collectAsState()
     val notes by viewModel.notes.collectAsState()
     val aiGeneratedContent by viewModel.aiGeneratedContent.collectAsState()
@@ -83,10 +85,10 @@ fun ScheduleScreen(
                         Icons.Default.CalendarMonth,
                         contentDescription = null,
                         modifier = Modifier.size(64.dp),
-                        tint = MaterialTheme.colorScheme.outline
+                        tint = colors.outline
                     )
                     Spacer(Modifier.height(16.dp))
-                    Text("暂无日程", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.outline)
+                    Text("暂无日程", style = MaterialTheme.typography.bodyLarge, color = colors.outline)
                 }
             }
         } else {
@@ -119,14 +121,14 @@ fun ScheduleScreen(
                                 Column(modifier = Modifier.weight(1f)) {
                                     Text(schedule.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
                                     Spacer(Modifier.height(4.dp))
-                                    Text(dateFormat.format(Date(schedule.date)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.outline)
+                                    Text(dateFormat.format(Date(schedule.date)), style = MaterialTheme.typography.bodySmall, color = colors.outline)
                                     if (schedule.location != null) {
                                         Spacer(Modifier.height(2.dp))
-                                        Text("📍 ${schedule.location}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.outline)
+                                        Text("📍 ${schedule.location}", style = MaterialTheme.typography.bodySmall, color = colors.outline)
                                     }
                                     if (linkedNote != null) {
                                         Spacer(Modifier.height(2.dp))
-                                        Text("关联: ${linkedNote.note.title.ifBlank { "无标题" }}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+                                        Text("关联: ${linkedNote.note.title.ifBlank { "无标题" }}", style = MaterialTheme.typography.bodySmall, color = colors.primary)
                                     }
                                 }
                             }
@@ -212,7 +214,7 @@ fun ScheduleScreen(
                 TextButton(onClick = {
                     viewModel.deleteSchedule(schedule)
                     showDeleteConfirm = null
-                }) { Text("删除", color = MaterialTheme.colorScheme.error) }
+                }) { Text("删除", color = colors.error) }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteConfirm = null }) { Text("取消") }
@@ -256,7 +258,7 @@ fun ScheduleScreen(
             title = { Text("选择关联笔记") },
             text = {
                 if (notes.isEmpty()) {
-                    Text("暂无笔记", color = MaterialTheme.colorScheme.outline)
+                    Text("暂无笔记", color = colors.outline)
                 } else {
                     Column(modifier = Modifier.fillMaxWidth()) {
                         notes.forEach { noteWithTags ->
@@ -326,8 +328,9 @@ private fun ScheduleActionRow(
     onClick: () -> Unit,
     isDestructive: Boolean = false
 ) {
-    val contentColor = if (isDestructive) MaterialTheme.colorScheme.error
-                       else MaterialTheme.colorScheme.onSurface
+    val colors = LocalAppColors.current
+    val contentColor = if (isDestructive) colors.error
+                       else colors.onSurface
 
     Row(
         modifier = Modifier
@@ -357,6 +360,7 @@ private fun ScheduleDialog(
     onConfirm: (title: String, date: Long, endDate: Long?, location: String?, description: String?, noteId: Long?) -> Unit,
     notes: List<NoteWithTags>
 ) {
+    val colors = LocalAppColors.current
     var editTitle by remember { mutableStateOf(initialTitle) }
     var editDate by remember { mutableStateOf(initialDate) }
     var editEndDate by remember { mutableStateOf(initialEndDate) }
@@ -410,9 +414,9 @@ private fun ScheduleDialog(
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                         colors = OutlinedTextFieldDefaults.colors(
-                            disabledTextColor = MaterialTheme.colorScheme.onSurface,
-                            disabledBorderColor = MaterialTheme.colorScheme.outline,
-                            disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            disabledTextColor = colors.onSurface,
+                            disabledBorderColor = colors.outline,
+                            disabledLabelColor = colors.onSurfaceVariant,
                         )
                     )
                     Box(
@@ -434,9 +438,9 @@ private fun ScheduleDialog(
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                         colors = OutlinedTextFieldDefaults.colors(
-                            disabledTextColor = MaterialTheme.colorScheme.onSurface,
-                            disabledBorderColor = MaterialTheme.colorScheme.outline,
-                            disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            disabledTextColor = colors.onSurface,
+                            disabledBorderColor = colors.outline,
+                            disabledLabelColor = colors.onSurfaceVariant,
                         )
                     )
                     Box(
