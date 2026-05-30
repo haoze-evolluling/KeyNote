@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.haoze.keynote.viewmodel.EditNoteViewModel
 import kotlinx.coroutines.launch
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,6 +50,7 @@ fun EditNoteScreen(
     onNavigateBack: () -> Unit,
     viewModel: EditNoteViewModel = viewModel()
 ) {
+    val colors = LocalAppColors.current
     val title by viewModel.title.collectAsState()
     val content by viewModel.content.collectAsState()
     val tags by viewModel.tags.collectAsState()
@@ -111,14 +113,14 @@ fun EditNoteScreen(
                                     Icons.Default.Undo,
                                     contentDescription = "撤回",
                                     modifier = Modifier.size(18.dp),
-                                    tint = if (canUndo) MaterialTheme.colorScheme.onSurface
-                                           else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                                    tint = if (canUndo) colors.onSurface
+                                           else colors.onSurface.copy(alpha = 0.38f)
                                 )
                                 Text(
                                     "撤回",
                                     style = MaterialTheme.typography.labelSmall,
-                                    color = if (canUndo) MaterialTheme.colorScheme.onSurface
-                                            else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                                    color = if (canUndo) colors.onSurface
+                                            else colors.onSurface.copy(alpha = 0.38f)
                                 )
                             }
                         }
@@ -219,7 +221,7 @@ fun EditNoteScreen(
                                 HorizontalDivider()
                                 // Delete
                                 DropdownMenuItem(
-                                    text = { Text("删除", color = MaterialTheme.colorScheme.error) },
+                                    text = { Text("删除", color = colors.error) },
                                     onClick = {
                                         showDeleteDialog = true
                                         showMenu = false
@@ -229,7 +231,7 @@ fun EditNoteScreen(
                                             Icons.Default.Delete,
                                             contentDescription = null,
                                             modifier = Modifier.size(18.dp),
-                                            tint = MaterialTheme.colorScheme.error
+                                            tint = colors.error
                                         )
                                     }
                                 )
@@ -280,7 +282,7 @@ fun EditNoteScreen(
                         Text(
                             "标签",
                             style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.outline
+                            color = colors.outline
                         )
                         TagChipRow(
                             tags = tags,
@@ -361,7 +363,7 @@ fun EditNoteScreen(
                                     onLongClick = { showEditDialog = true }
                                 ),
                             colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.primaryContainer
+                                containerColor = colors.primaryContainer
                             )
                         ) {
                             Row(
@@ -374,13 +376,13 @@ fun EditNoteScreen(
                                     Text(
                                         label,
                                         style = MaterialTheme.typography.labelMedium,
-                                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                                        color = colors.onPrimaryContainer
                                     )
                                     Spacer(modifier = Modifier.height(4.dp))
                                     Text(
                                         text = summaryText,
                                         style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                                        color = colors.onPrimaryContainer
                                     )
                                 }
                                 IconButton(
@@ -426,7 +428,7 @@ fun EditNoteScreen(
                     Text(
                         "标签",
                         style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.outline
+                        color = colors.outline
                     )
                     TagChipRow(
                         tags = tags,
@@ -479,7 +481,7 @@ fun EditNoteScreen(
                     showDeleteDialog = false
                     onNavigateBack()
                 }) {
-                    Text("删除", color = MaterialTheme.colorScheme.error)
+                    Text("删除", color = colors.error)
                 }
             },
             dismissButton = {
