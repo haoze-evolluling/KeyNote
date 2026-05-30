@@ -21,6 +21,7 @@ import java.util.Locale
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,6 +30,7 @@ fun TrashScreen(
     scope: CoroutineScope,
     viewModel: TrashViewModel = viewModel()
 ) {
+    val colors = LocalAppColors.current
     val deletedNotes by viewModel.deletedNotes.collectAsState()
     val dateFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()) }
 
@@ -54,7 +56,7 @@ fun TrashScreen(
                 Text(
                     "回收站为空",
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.outline
+                    color = colors.outline
                 )
             }
         } else {
@@ -83,12 +85,12 @@ fun TrashScreen(
                                 ).toInt())
                                 Surface(
                                     shape = MaterialTheme.shapes.extraSmall,
-                                    color = MaterialTheme.colorScheme.errorContainer
+                                    color = colors.errorContainer
                                 ) {
                                     Text(
                                         text = "${remainingDays}天",
                                         style = MaterialTheme.typography.labelSmall,
-                                        color = MaterialTheme.colorScheme.onErrorContainer,
+                                        color = colors.onErrorContainer,
                                         modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                                     )
                                 }
@@ -97,7 +99,7 @@ fun TrashScreen(
                             Text(
                                 text = dateFormat.format(Date(noteWithTags.note.updatedAt)),
                                 style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.outline
+                                color = colors.outline
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Row(
@@ -124,10 +126,10 @@ fun TrashScreen(
                                         Icons.Default.DeleteForever,
                                         contentDescription = null,
                                         modifier = Modifier.size(18.dp),
-                                        tint = MaterialTheme.colorScheme.error
+                                        tint = colors.error
                                     )
                                     Spacer(modifier = Modifier.width(4.dp))
-                                    Text("永久删除", color = MaterialTheme.colorScheme.error)
+                                    Text("永久删除", color = colors.error)
                                 }
                             }
                         }
