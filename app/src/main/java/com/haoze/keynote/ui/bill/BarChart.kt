@@ -16,23 +16,25 @@ import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.unit.dp
 import com.haoze.keynote.data.db.entity.DailySpending
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @Composable
 fun BarChart(
     data: List<DailySpending>,
     modifier: Modifier = Modifier
 ) {
+    val colors = LocalAppColors.current
     if (data.isEmpty()) {
         Box(modifier = modifier, contentAlignment = Alignment.Center) {
-            Text("暂无数据", color = MaterialTheme.colorScheme.outline)
+            Text("暂无数据", color = colors.outline)
         }
         return
     }
 
     val maxVal = data.maxOf { it.total }.coerceAtLeast(1.0)
-    val gridColor = MaterialTheme.colorScheme.outlineVariant
-    val textColor = MaterialTheme.colorScheme.outline
-    val barColor = MaterialTheme.colorScheme.primary
+    val gridColor = colors.outlineVariant
+    val textColor = colors.outline
+    val barColor = colors.primary
 
     val barWidthDp = 24.dp
     val barSpacingDp = 12.dp
