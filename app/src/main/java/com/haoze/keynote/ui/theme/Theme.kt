@@ -1,10 +1,11 @@
 package com.haoze.keynote.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.unit.dp
 
 private val AppShapes = Shapes(
@@ -17,16 +18,17 @@ private val AppShapes = Shapes(
 
 @Composable
 fun KeyNoteTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colorScheme = lightColorScheme(
-        primary = PurpleSeed,
-    )
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        shapes = AppShapes,
-        content = content
-    )
+    val colors = if (darkTheme) AppColorPalette.Dark else AppColorPalette.Light
+    
+    CompositionLocalProvider(LocalAppColors provides colors) {
+        MaterialTheme(
+            colorScheme = colors.toMaterialColorScheme(),
+            typography = Typography,
+            shapes = AppShapes,
+            content = content
+        )
+    }
 }
