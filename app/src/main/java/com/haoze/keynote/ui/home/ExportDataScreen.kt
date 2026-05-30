@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,6 +33,7 @@ fun ExportDataScreen(
     drawerState: DrawerState,
     drawerScope: CoroutineScope,
 ) {
+    val colors = LocalAppColors.current
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -114,7 +116,7 @@ fun ExportDataScreen(
             Text(
                 "文件将保存到 Downloads/KeyNote/",
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline
+                color = colors.outline
             )
         }
     }

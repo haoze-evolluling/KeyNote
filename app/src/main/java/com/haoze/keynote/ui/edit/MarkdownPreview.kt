@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.jeziellago.compose.markdowntext.MarkdownText
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @Composable
 fun MarkdownPreview(
@@ -16,11 +17,12 @@ fun MarkdownPreview(
     isDark: Boolean,
     modifier: Modifier = Modifier
 ) {
+    val colors = LocalAppColors.current
     if (content.isBlank()) {
         Text(
             "暂无内容",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.outline,
+            color = colors.outline,
             modifier = modifier
         )
         return

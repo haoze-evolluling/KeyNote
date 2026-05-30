@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.haoze.keynote.data.db.entity.TagEntity
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,6 +21,7 @@ fun TagEditBottomSheet(
     onRemoveTag: (Long) -> Unit,
     onDismiss: () -> Unit
 ) {
+    val colors = LocalAppColors.current
     var newTagText by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.padding(16.dp)) {
@@ -33,7 +35,7 @@ fun TagEditBottomSheet(
             Text(
                 "当前标签",
                 style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.outline
+                color = colors.outline
             )
             Spacer(modifier = Modifier.height(8.dp))
             LazyColumn(

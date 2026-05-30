@@ -6,6 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.haoze.keynote.data.db.entity.CategoryEntity
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @Composable
 fun CategoryChipRow(
@@ -15,13 +16,14 @@ fun CategoryChipRow(
     onAddCategory: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val colors = LocalAppColors.current
     var showAddDialog by remember { mutableStateOf(false) }
 
     Column(modifier = modifier) {
         Text(
             "类别",
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.outline
+            color = colors.outline
         )
         Spacer(modifier = Modifier.height(4.dp))
         FlowRow(

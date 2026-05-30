@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @Composable
 fun NoteActionBottomSheet(
@@ -113,8 +114,9 @@ private fun ActionRow(
     isLoading: Boolean = false,
     loadingLabel: String = ""
 ) {
-    val contentColor = if (isDestructive) MaterialTheme.colorScheme.error
-                       else MaterialTheme.colorScheme.onSurface
+    val colors = LocalAppColors.current
+    val contentColor = if (isDestructive) colors.error
+                       else colors.onSurface
 
     Row(
         modifier = Modifier

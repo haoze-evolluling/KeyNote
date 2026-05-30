@@ -13,6 +13,7 @@ import com.haoze.keynote.data.db.entity.NoteWithTags
 import dev.jeziellago.compose.markdowntext.MarkdownText
 import java.text.SimpleDateFormat
 import java.util.*
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -23,6 +24,7 @@ fun NoteCard(
     onLongClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    val colors = LocalAppColors.current
     val note = noteWithTags.note
     val dateFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()) }
 
@@ -47,7 +49,7 @@ fun NoteCard(
                 MarkdownText(
                     markdown = note.content,
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = colors.onSurfaceVariant
                     ),
                     maxLines = 3,
                     modifier = Modifier.padding(top = 4.dp)
@@ -60,7 +62,7 @@ fun NoteCard(
                 Text(
                     text = dateFormat.format(Date(note.createdAt)),
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.outline
+                    color = colors.outline
                 )
             }
             if (noteWithTags.tags.isNotEmpty()) {

@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,6 +27,7 @@ fun BillStatsScreen(
     scope: CoroutineScope,
     viewModel: BillStatsViewModel = viewModel()
 ) {
+    val colors = LocalAppColors.current
     val totalSpending by viewModel.totalSpending.collectAsState()
     val billCount by viewModel.billCount.collectAsState()
     val categoryStats by viewModel.categoryStats.collectAsState()
@@ -92,7 +94,7 @@ fun BillStatsScreen(
                 Text(
                     "${dateFormat.format(Date(dateRange.first))} ~ ${dateFormat.format(Date(dateRange.second))}",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.outline
+                    color = colors.outline
                 )
             }
 
@@ -103,8 +105,8 @@ fun BillStatsScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                SummaryCard("总支出", "¥${String.format("%.2f", totalSpending)}", MaterialTheme.colorScheme.primary, Modifier.weight(1f))
-                SummaryCard("账单数", "$billCount", MaterialTheme.colorScheme.secondary, Modifier.weight(1f))
+                SummaryCard("总支出", "¥${String.format("%.2f", totalSpending)}", colors.primary, Modifier.weight(1f))
+                SummaryCard("账单数", "$billCount", colors.secondary, Modifier.weight(1f))
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -112,12 +114,12 @@ fun BillStatsScreen(
             ) {
                 val dayCount = ((dateRange.second - dateRange.first) / (24 * 60 * 60 * 1000)).toInt().coerceAtLeast(1)
                 val dailyAvg = totalSpending / dayCount
-                SummaryCard("日均", "¥${String.format("%.2f", dailyAvg)}", MaterialTheme.colorScheme.tertiary, Modifier.weight(1f))
+                SummaryCard("日均", "¥${String.format("%.2f", dailyAvg)}", colors.tertiary, Modifier.weight(1f))
                 val topCategory = categoryStats.maxByOrNull { it.total }
                 SummaryCard(
                     "最高类别",
                     topCategory?.categoryName ?: "-",
-                    MaterialTheme.colorScheme.error,
+                    colors.error,
                     Modifier.weight(1f)
                 )
             }
@@ -230,6 +232,7 @@ private fun SummaryCard(
     color: androidx.compose.ui.graphics.Color,
     modifier: Modifier = Modifier
 ) {
+    val colors = LocalAppColors.current
     Card(modifier = modifier) {
         Column(
             modifier = Modifier
@@ -237,7 +240,7 @@ private fun SummaryCard(
                 .padding(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.outline)
+            Text(label, style = MaterialTheme.typography.labelMedium, color = colors.outline)
             Spacer(modifier = Modifier.height(4.dp))
             Text(value, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = color)
         }

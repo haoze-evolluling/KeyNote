@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.haoze.keynote.data.remote.AiProvider
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -34,6 +35,7 @@ fun AiProviderManageScreen(
     sealKey: (String) -> String,
     openKey: (String) -> String
 ) {
+    val colors = LocalAppColors.current
     var editingProvider by remember { mutableStateOf<AiProvider?>(null) }
     var isAddMode by remember { mutableStateOf(false) }
 
@@ -70,8 +72,8 @@ fun AiProviderManageScreen(
                             }
                         ),
                     colors = CardDefaults.elevatedCardColors(
-                        containerColor = if (isActive) MaterialTheme.colorScheme.primaryContainer
-                                        else MaterialTheme.colorScheme.surfaceVariant
+                        containerColor = if (isActive) colors.primaryContainer
+                                        else colors.surfaceVariant
                     )
                 ) {
                     Row(
@@ -84,34 +86,34 @@ fun AiProviderManageScreen(
                             Text(
                                 provider.name,
                                 style = MaterialTheme.typography.titleMedium,
-                                color = if (isActive) MaterialTheme.colorScheme.onPrimaryContainer
-                                       else MaterialTheme.colorScheme.onSurface
+                                color = if (isActive) colors.onPrimaryContainer
+                                       else colors.onSurface
                             )
                             Spacer(Modifier.height(4.dp))
                             Text(
                                 provider.baseUrl,
                                 style = MaterialTheme.typography.bodySmall,
-                                color = if (isActive) MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
-                                       else MaterialTheme.colorScheme.outline
+                                color = if (isActive) colors.onPrimaryContainer.copy(alpha = 0.7f)
+                                       else colors.outline
                             )
                             if (provider.modelName.isNotBlank()) {
                                 Text(
                                     provider.modelName,
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = if (isActive) MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
-                                           else MaterialTheme.colorScheme.outline
+                                    color = if (isActive) colors.onPrimaryContainer.copy(alpha = 0.7f)
+                                           else colors.outline
                                 )
                             }
                         }
                         if (isActive) {
                             Surface(
                                 shape = RoundedCornerShape(4.dp),
-                                color = MaterialTheme.colorScheme.primary
+                                color = colors.primary
                             ) {
                                 Text(
                                     "当前",
                                     style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onPrimary,
+                                    color = colors.onPrimary,
                                     modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                                 )
                             }
@@ -122,7 +124,7 @@ fun AiProviderManageScreen(
                                 Icon(
                                     Icons.Default.Delete,
                                     contentDescription = "删除",
-                                    tint = MaterialTheme.colorScheme.error
+                                    tint = colors.error
                                 )
                             }
                         }
@@ -185,6 +187,7 @@ private fun ProviderEditDialog(
     onDismiss: () -> Unit,
     onSave: (name: String, baseUrl: String, modelName: String, apiKey: String) -> Unit
 ) {
+    val colors = LocalAppColors.current
     var name by remember(provider.id) { mutableStateOf(provider.name) }
     var baseUrl by remember(provider.id) { mutableStateOf(provider.baseUrl) }
     var modelName by remember(provider.id) { mutableStateOf(provider.modelName) }
@@ -244,7 +247,7 @@ private fun ProviderEditDialog(
                     Text(
                         "预设厂商参数不可修改",
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.outline
+                        color = colors.outline
                     )
                 }
             }
