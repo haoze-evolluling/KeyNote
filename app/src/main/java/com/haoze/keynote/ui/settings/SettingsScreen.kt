@@ -16,6 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.haoze.keynote.viewmodel.SettingsViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,6 +26,7 @@ fun SettingsScreen(
     onNavigateToProviderManage: () -> Unit = {},
     viewModel: SettingsViewModel = viewModel()
 ) {
+    val colors = LocalAppColors.current
     val providers by viewModel.providers.collectAsState()
     val activeProviderId by viewModel.activeProviderId.collectAsState()
     val noteFontSize by viewModel.noteFontSize.collectAsState()
@@ -129,7 +131,7 @@ fun SettingsScreen(
                                 Icons.Default.AutoAwesome,
                                 contentDescription = null,
                                 modifier = Modifier.size(24.dp),
-                                tint = MaterialTheme.colorScheme.primary
+                                tint = colors.primary
                             )
                             Spacer(Modifier.width(12.dp))
                             Column(modifier = Modifier.weight(1f)) {
@@ -137,13 +139,13 @@ fun SettingsScreen(
                                 Text(
                                     "当前: $currentProviderName",
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.outline
+                                    color = colors.outline
                                 )
                             }
                             Icon(
                                 Icons.Default.KeyboardArrowRight,
                                 contentDescription = null,
-                                tint = MaterialTheme.colorScheme.outline
+                                tint = colors.outline
                             )
                         }
                     }
