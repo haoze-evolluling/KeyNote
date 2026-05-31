@@ -28,6 +28,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import com.haoze.keynote.ui.theme.AppAlertDialog
+import com.haoze.keynote.ui.theme.AppDatePickerDialog
 import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -144,7 +146,7 @@ fun ScheduleScreen(
         val currentSchedule = schedules.find { it.id == showActionDialogForSchedule }
         if (currentSchedule != null) {
             val hasLink = currentSchedule.noteId != null
-            AlertDialog(
+            AppAlertDialog(
                 onDismissRequest = { showActionDialogForSchedule = null },
                 title = { Text(currentSchedule.title) },
                 text = {
@@ -206,7 +208,7 @@ fun ScheduleScreen(
     }
 
     showDeleteConfirm?.let { schedule ->
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = { showDeleteConfirm = null },
             title = { Text("删除日程") },
             text = { Text("确定要删除「${schedule.title}」吗？") },
@@ -253,7 +255,7 @@ fun ScheduleScreen(
     }
 
     showLinkNoteDialog?.let { scheduleId ->
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = { showLinkNoteDialog = null },
             title = { Text("选择关联笔记") },
             text = {
@@ -288,7 +290,7 @@ fun ScheduleScreen(
 
     aiGeneratedContent?.let { content ->
         var editedContent by remember(content) { mutableStateOf(content) }
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = {
                 viewModel.discardAiGeneratedNote()
                 pendingAiScheduleId = null
@@ -391,7 +393,7 @@ private fun ScheduleDialog(
         }
     }
 
-    AlertDialog(
+    AppAlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(title) },
         text = {
@@ -495,7 +497,7 @@ private fun ScheduleDialog(
 
     if (showDatePicker) {
         val datePickerState = rememberDatePickerState(initialSelectedDateMillis = editDate)
-        DatePickerDialog(
+        AppDatePickerDialog(
             onDismissRequest = { showDatePicker = false },
             confirmButton = {
                 TextButton(onClick = {
@@ -526,7 +528,7 @@ private fun ScheduleDialog(
             initialMinute = cal.get(Calendar.MINUTE),
             is24Hour = true
         )
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = { showTimePicker = false },
             title = { Text("选择时间") },
             text = { TimePicker(state = timePickerState) },
@@ -551,7 +553,7 @@ private fun ScheduleDialog(
 
     if (showEndDatePicker) {
         val endDatePickerState = rememberDatePickerState(initialSelectedDateMillis = editEndDate ?: System.currentTimeMillis())
-        DatePickerDialog(
+        AppDatePickerDialog(
             onDismissRequest = { showEndDatePicker = false },
             confirmButton = {
                 TextButton(onClick = {
@@ -582,7 +584,7 @@ private fun ScheduleDialog(
             initialMinute = cal.get(Calendar.MINUTE),
             is24Hour = true
         )
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = { showEndTimePicker = false },
             title = { Text("选择结束时间") },
             text = { TimePicker(state = endTimePickerState) },

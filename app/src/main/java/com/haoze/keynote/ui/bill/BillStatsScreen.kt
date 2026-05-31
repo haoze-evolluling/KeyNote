@@ -18,6 +18,8 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.haoze.keynote.ui.theme.AppAlertDialog
+import com.haoze.keynote.ui.theme.AppDatePickerDialog
 import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -184,7 +186,7 @@ fun BillStatsScreen(
             initialSelectedDateMillis = if (pickingStart) startMillis else endMillis
         )
 
-        DatePickerDialog(
+        AppDatePickerDialog(
             onDismissRequest = { showCustomRangePicker = false },
             confirmButton = {
                 TextButton(onClick = {

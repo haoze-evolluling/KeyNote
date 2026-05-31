@@ -18,6 +18,7 @@ class PreferencesManager(private val context: Context) {
         private val PROVIDERS_JSON = stringPreferencesKey("providers_json")
         private val BUILTIN_UNLOCKED = booleanPreferencesKey("builtin_unlocked")
         private val NOTE_FONT_SIZE = intPreferencesKey("note_font_size")
+        private val DARK_MODE_PREFERENCE = intPreferencesKey("dark_mode_preference")
     }
 
     val activeProviderId: Flow<String> = context.dataStore.data.map { prefs ->
@@ -36,6 +37,10 @@ class PreferencesManager(private val context: Context) {
         prefs[NOTE_FONT_SIZE] ?: 16
     }
 
+    val darkModePreference: Flow<Int> = context.dataStore.data.map { prefs ->
+        prefs[DARK_MODE_PREFERENCE] ?: 0
+    }
+
     suspend fun saveActiveProviderId(id: String) {
         context.dataStore.edit { prefs -> prefs[ACTIVE_PROVIDER_ID] = id }
     }
@@ -50,6 +55,10 @@ class PreferencesManager(private val context: Context) {
 
     suspend fun saveNoteFontSize(sp: Int) {
         context.dataStore.edit { prefs -> prefs[NOTE_FONT_SIZE] = sp }
+    }
+
+    suspend fun saveDarkModePreference(mode: Int) {
+        context.dataStore.edit { prefs -> prefs[DARK_MODE_PREFERENCE] = mode }
     }
 
     fun markdownModeForNote(noteId: Long): Flow<Boolean> {

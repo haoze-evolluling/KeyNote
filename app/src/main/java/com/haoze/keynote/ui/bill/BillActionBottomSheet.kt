@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.haoze.keynote.ui.theme.AppAlertDialog
 import com.haoze.keynote.ui.theme.LocalAppColors
 
 @Composable
@@ -29,7 +30,7 @@ fun BillActionBottomSheet(
     onDelete: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    AlertDialog(
+    AppAlertDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(

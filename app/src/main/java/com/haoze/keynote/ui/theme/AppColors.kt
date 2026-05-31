@@ -40,7 +40,23 @@ data class AppColors(
     val outlineVariant: Color,
     val background: Color,
     val onBackground: Color,
-    
+
+    // 透明色
+    val transparent: Color,
+
+    // 阴影色
+    val shadow: Color,
+
+    // 光晕渐变色
+    val glowPrimary: Color,
+    val glowSecondary: Color,
+
+    // 对话框背景色
+    val dialogContainer: Color,
+
+    // 图标原始色（不应用 tint）
+    val unspecified: Color,
+
     // 图表专用色
     val chartColors: List<Color>
 )

@@ -1,5 +1,6 @@
 package com.haoze.keynote.ui.chat
 
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,6 +15,8 @@ import androidx.compose.material.icons.automirrored.outlined.Chat
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardReturn
 import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Psychology
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -29,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.haoze.keynote.R
+import com.haoze.keynote.ui.theme.AppAlertDialog
 import com.haoze.keynote.ui.theme.LocalAppColors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -78,8 +82,18 @@ fun AIChatScreen(
         )
     )
 
+    // 光晕动画：缓慢非线性消失
+    val glowAlpha by animateFloatAsState(
+        targetValue = if (messages.isEmpty()) 1f else 0f,
+        animationSpec = tween(
+            durationMillis = 1500,
+            easing = FastOutSlowInEasing
+        ),
+        label = "glowAlpha"
+    )
+
     Scaffold(
-        containerColor = Color.Transparent,
+        containerColor = colors.transparent,
         topBar = {
             TopAppBar(
                 title = { Text("AI 对话") },
@@ -124,20 +138,47 @@ fun AIChatScreen(
             )
         }
     ) { innerPadding ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(colors.surface)
         ) {
-            if (messages.isEmpty()) {
+            // 光晕渐变效果：从输入框方向向上扩散，覆盖整个内容区域
+            if (messages.isEmpty() || glowAlpha > 0f) {
                 Box(
                     modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        .fillMaxSize()
+                        .graphicsLayer(alpha = glowAlpha)
+                        .background(
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    colors.transparent,
+                                    colors.glowSecondary.copy(alpha = 0.03f),
+                                    colors.glowSecondary,
+                                    colors.glowPrimary
+                                )
+                            )
+                        )
+                )
+            } else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(colors.surface)
+                )
+            }
+
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                if (messages.isEmpty()) {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Image(
                             painter = painterResource(R.drawable.ic_logo),
                             contentDescription = "KeyNote Logo",
@@ -180,14 +221,14 @@ fun AIChatScreen(
                                     modifier = Modifier
                                         .size(28.dp)
                                         .clip(CircleShape)
-                                        .background(colors.tertiaryContainer),
+                                        .background(colors.primaryContainer),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
-                                        Icons.Outlined.AutoAwesome,
+                                        Icons.Outlined.Psychology,
                                         contentDescription = null,
                                         modifier = Modifier.size(18.dp),
-                                        tint = colors.onTertiaryContainer
+                                        tint = colors.primary
                                     )
                                 }
                                 Spacer(modifier = Modifier.width(6.dp))
@@ -259,10 +300,10 @@ fun AIChatScreen(
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
-                                        Icons.Outlined.AutoAwesome,
+                                        Icons.Outlined.Person,
                                         contentDescription = null,
                                         modifier = Modifier.size(18.dp),
-                                        tint = colors.onTertiaryContainer
+                                        tint = colors.primary
                                     )
                                 }
                             }
@@ -275,14 +316,14 @@ fun AIChatScreen(
                                     modifier = Modifier
                                         .size(28.dp)
                                         .clip(CircleShape)
-                                        .background(colors.tertiaryContainer),
+                                        .background(colors.primaryContainer),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     Icon(
-                                        Icons.Outlined.AutoAwesome,
+                                        Icons.Outlined.Psychology,
                                         contentDescription = null,
                                         modifier = Modifier.size(18.dp),
-                                        tint = colors.onTertiaryContainer
+                                        tint = colors.primary
                                     )
                                 }
                                 Spacer(modifier = Modifier.width(6.dp))
@@ -322,8 +363,8 @@ fun AIChatScreen(
                     .shadow(
                         elevation = 8.dp,
                         shape = RoundedCornerShape(28.dp),
-                        ambientColor = Color.Black.copy(alpha = 0.1f),
-                        spotColor = Color.Black.copy(alpha = 0.1f)
+                        ambientColor = colors.shadow,
+                        spotColor = colors.shadow
                     )
                     .border(
                         width = 1.dp,
@@ -364,11 +405,11 @@ fun AIChatScreen(
                         singleLine = true,
                         enabled = !isLoading,
                         colors = TextFieldDefaults.colors(
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            disabledContainerColor = Color.Transparent,
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent
+                            focusedContainerColor = colors.transparent,
+                            unfocusedContainerColor = colors.transparent,
+                            disabledContainerColor = colors.transparent,
+                            focusedIndicatorColor = colors.transparent,
+                            unfocusedIndicatorColor = colors.transparent
                         ),
                         textStyle = MaterialTheme.typography.bodyLarge
                     )
@@ -397,9 +438,8 @@ fun AIChatScreen(
                 }
             }
         }
-    }
 
-    if (pendingBill != null) {
+        if (pendingBill != null) {
         val bill = pendingBill!!
         var selectedCategoryId by remember(bill) {
             mutableStateOf<Long?>(
@@ -407,7 +447,7 @@ fun AIChatScreen(
             )
         }
 
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = { viewModel.dismissPendingBill() },
             title = { Text("确认创建账单") },
             text = {
@@ -450,5 +490,7 @@ fun AIChatScreen(
                 TextButton(onClick = { viewModel.dismissPendingBill() }) { Text("取消") }
             }
         )
+    }
+    }
     }
 }

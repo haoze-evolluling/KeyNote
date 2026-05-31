@@ -30,6 +30,7 @@ fun SettingsScreen(
     val providers by viewModel.providers.collectAsState()
     val activeProviderId by viewModel.activeProviderId.collectAsState()
     val noteFontSize by viewModel.noteFontSize.collectAsState()
+    val darkModePreference by viewModel.darkModePreference.collectAsState()
 
     val activeProvider = providers.find { it.id == activeProviderId }
 
@@ -52,7 +53,15 @@ fun SettingsScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Section 1: Font size
+            // Section 1: Dark mode
+            item {
+                DarkModeSettings(
+                    currentPreference = darkModePreference,
+                    onPreferenceChange = { viewModel.setDarkMode(it) }
+                )
+            }
+
+            // Section 2: Font size
             item {
                 Column {
                     Text("正文字体大小", style = MaterialTheme.typography.titleMedium)
@@ -75,7 +84,7 @@ fun SettingsScreen(
                 }
             }
 
-            // Section 2: AI config
+            // Section 3: AI config
             item {
                 Column {
                     Text("AI 配置", style = MaterialTheme.typography.titleMedium)
@@ -91,7 +100,7 @@ fun SettingsScreen(
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
                             modifier = Modifier.fillMaxWidth().menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                         )
-                        ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                        ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, containerColor = colors.dialogContainer) {
                             providers.forEach { provider ->
                                 DropdownMenuItem(
                                     text = { Text(provider.name) },
@@ -108,7 +117,7 @@ fun SettingsScreen(
                 }
             }
 
-            // Section 3: Provider management entry
+            // Section 4: Provider management entry
             item {
                 Column {
                     Text("厂商管理", style = MaterialTheme.typography.titleMedium)

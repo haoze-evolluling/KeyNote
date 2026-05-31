@@ -6,6 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.haoze.keynote.data.db.entity.CategoryEntity
+import com.haoze.keynote.ui.theme.AppAlertDialog
 import com.haoze.keynote.ui.theme.LocalAppColors
 
 @Composable
@@ -49,7 +50,7 @@ fun CategoryChipRow(
 
     if (showAddDialog) {
         var newName by remember { mutableStateOf("") }
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = { showAddDialog = false },
             title = { Text("新建类别") },
             text = {

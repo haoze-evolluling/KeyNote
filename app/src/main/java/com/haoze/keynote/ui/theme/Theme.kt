@@ -1,6 +1,5 @@
 package com.haoze.keynote.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
@@ -18,12 +17,16 @@ private val AppShapes = Shapes(
 
 @Composable
 fun KeyNoteTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkModeManager: DarkModeManager = DarkModeManager(),
     content: @Composable () -> Unit
 ) {
+    val darkTheme = darkModeManager.isDarkMode()
     val colors = if (darkTheme) AppColorPalette.Dark else AppColorPalette.Light
-    
-    CompositionLocalProvider(LocalAppColors provides colors) {
+
+    CompositionLocalProvider(
+        LocalAppColors provides colors,
+        LocalDarkModeManager provides darkModeManager
+    ) {
         MaterialTheme(
             colorScheme = colors.toMaterialColorScheme(),
             typography = Typography,

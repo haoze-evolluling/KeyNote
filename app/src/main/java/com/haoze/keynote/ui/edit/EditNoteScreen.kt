@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.haoze.keynote.viewmodel.EditNoteViewModel
 import kotlinx.coroutines.launch
+import com.haoze.keynote.ui.theme.AppAlertDialog
 import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -149,7 +150,8 @@ fun EditNoteScreen(
                             }
                             DropdownMenu(
                                 expanded = showMenu,
-                                onDismissRequest = { showMenu = false }
+                                onDismissRequest = { showMenu = false },
+                                containerColor = colors.dialogContainer
                             ) {
                                 // Share
                                 val context = LocalContext.current
@@ -399,7 +401,7 @@ fun EditNoteScreen(
                         }
                         if (showEditDialog) {
                             var editedText by remember { mutableStateOf(summaryText) }
-                            AlertDialog(
+                            AppAlertDialog(
                                 onDismissRequest = { showEditDialog = false },
                                 title = { Text("编辑摘要") },
                                 text = {
@@ -471,7 +473,7 @@ fun EditNoteScreen(
         }
 
     if (showDeleteDialog) {
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = { showDeleteDialog = false },
             title = { Text("删除笔记") },
             text = { Text("确定要删除这篇笔记吗？删除后可在回收站中恢复。") },
@@ -493,7 +495,7 @@ fun EditNoteScreen(
     }
 
     if (polishedText != null) {
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = { viewModel.dismissPolishedText() },
             title = { Text("AI润色结果") },
             text = {

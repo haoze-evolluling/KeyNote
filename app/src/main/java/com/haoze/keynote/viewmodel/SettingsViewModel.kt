@@ -12,6 +12,9 @@ import com.google.gson.reflect.TypeToken
 import android.util.Log
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import com.haoze.keynote.ui.theme.DarkModePreference
+import com.haoze.keynote.ui.theme.toDarkModePreference
+import com.haoze.keynote.ui.theme.toInt
 
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -29,6 +32,10 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     val noteFontSize: StateFlow<Int> = preferencesManager.noteFontSize
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 16)
+
+    val darkModePreference: StateFlow<DarkModePreference> = preferencesManager.darkModePreference
+        .map { it.toDarkModePreference() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), DarkModePreference.SYSTEM)
 
     init {
         viewModelScope.launch {
@@ -83,17 +90,19 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun addCustomProvider(name: String, baseUrl: String, modelName: String, apiKey: String) {
-        val list = _providers.value.toMutableList()
-        val id = "custom_${System.currentTimeMillis()}"
-        val newProvider = AiProvider(id, name, baseUrl, apiKey = apiKey, modelName = modelName)
-        list.add(newProvider)
-        _providers.value = list
-        Log.d("SettingsVM", "Adding custom provider: $id, $name, $baseUrl, model=$modelName")
         viewModelScope.launch {
-            apiManager.saveProviders(list)
-            Log.d("SettingsVM", "Custom providers saved, now saving active id: $id")
-            preferencesManager.saveActiveProviderId(id)
-            Log.d("SettingsVM", "Active provider id saved: $id")
+            try {
+                val list = _providers.value.toMutableList()
+                val id = "custom_${System.currentTimeMillis()}"
+                val newProvider = AiProvider(id, name, baseUrl, apiKey = apiKey, modelName = modelName)
+                list.add(newProvider)
+                apiManager.saveProviders(list)
+                _providers.value = list
+                preferencesManager.saveActiveProviderId(id)
+                Log.d("SettingsVM", "Custom provider added successfully: $id")
+            } catch (e: Exception) {
+                Log.e("SettingsVM", "Failed to add custom provider", e)
+            }
         }
     }
 
@@ -111,6 +120,10 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     fun setNoteFontSize(sp: Int) {
         viewModelScope.launch { preferencesManager.saveNoteFontSize(sp) }
+    }
+
+    fun setDarkMode(preference: DarkModePreference) {
+        viewModelScope.launch { preferencesManager.saveDarkModePreference(preference.toInt()) }
     }
 
     fun sealZidaipass(plain: String): String = KeyObfuscator.sealUserZidaipass(plain)

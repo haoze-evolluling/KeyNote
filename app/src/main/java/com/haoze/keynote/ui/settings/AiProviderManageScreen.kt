@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.haoze.keynote.data.remote.AiProvider
+import com.haoze.keynote.ui.theme.AppAlertDialog
 import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -37,7 +38,6 @@ fun AiProviderManageScreen(
 ) {
     val colors = LocalAppColors.current
     var editingProvider by remember { mutableStateOf<AiProvider?>(null) }
-    var isAddMode by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -68,7 +68,6 @@ fun AiProviderManageScreen(
                             onClick = { onSelectProvider(provider.id) },
                             onLongClick = {
                                 editingProvider = provider
-                                isAddMode = false
                             }
                         ),
                     colors = CardDefaults.elevatedCardColors(
@@ -136,7 +135,6 @@ fun AiProviderManageScreen(
                 Spacer(Modifier.height(8.dp))
                 OutlinedButton(
                     onClick = {
-                        isAddMode = true
                         editingProvider = AiProvider("", "", "", modelName = "")
                     },
                     modifier = Modifier.fillMaxWidth()
@@ -153,11 +151,10 @@ fun AiProviderManageScreen(
         val placeholder = "••••••••••••••••"
         ProviderEditDialog(
             provider = provider,
-            isAddMode = isAddMode,
             openKey = openKey,
             onDismiss = { editingProvider = null },
             onSave = { name, baseUrl, modelName, apiKey ->
-                if (isAddMode) {
+                if (provider.id.isEmpty()) {
                     val sealedKey = if (apiKey.isNotBlank() && apiKey != placeholder) sealKey(apiKey) else ""
                     onAddProvider(name, baseUrl, modelName, sealedKey)
                 } else {
@@ -182,23 +179,23 @@ fun AiProviderManageScreen(
 @Composable
 private fun ProviderEditDialog(
     provider: AiProvider,
-    isAddMode: Boolean,
     openKey: (String) -> String,
     onDismiss: () -> Unit,
     onSave: (name: String, baseUrl: String, modelName: String, apiKey: String) -> Unit
 ) {
     val colors = LocalAppColors.current
+    val isNewMode = provider.id.isEmpty()
     var name by remember(provider.id) { mutableStateOf(provider.name) }
     var baseUrl by remember(provider.id) { mutableStateOf(provider.baseUrl) }
     var modelName by remember(provider.id) { mutableStateOf(provider.modelName) }
-    val decryptedKey = if (provider.apiKey.isNotBlank() && !isAddMode) openKey(provider.apiKey) else ""
+    val decryptedKey = if (provider.apiKey.isNotBlank() && !isNewMode) openKey(provider.apiKey) else ""
     var apiKey by remember(provider.id) { mutableStateOf(decryptedKey) }
     var showKey by remember { mutableStateOf(false) }
     val isFullyLocked = provider.isBuiltin && provider.id == "built-in"
 
-    AlertDialog(
+    AppAlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (isAddMode) "添加自定义厂商" else "编辑厂商") },
+        title = { Text(if (isNewMode) "添加自定义厂商" else "编辑厂商") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(

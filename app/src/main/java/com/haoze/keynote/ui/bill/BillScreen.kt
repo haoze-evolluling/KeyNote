@@ -34,6 +34,8 @@ import kotlinx.coroutines.launch
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
+import com.haoze.keynote.ui.theme.AppAlertDialog
+import com.haoze.keynote.ui.theme.AppDatePickerDialog
 import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
@@ -164,7 +166,7 @@ fun BillScreen(
     }
 
     if (showDeleteConfirm != null) {
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = { showDeleteConfirm = null },
             title = { Text("删除账单") },
             text = { Text("确定要删除这条账单记录吗？") },
@@ -186,7 +188,7 @@ fun BillScreen(
         val bill = showBillDetailsForBill
         val rawBill = bill?.let { categoryMap[it.id] }
         if (bill != null) {
-            AlertDialog(
+            AppAlertDialog(
                 onDismissRequest = { showBillDetailsForBill = null },
                 title = { Text("账单详情") },
                 text = {
@@ -228,7 +230,7 @@ fun BillScreen(
             }
         }
 
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = { showEditDialogForBill = null },
             title = { Text("编辑账单") },
             text = {
@@ -306,7 +308,7 @@ fun BillScreen(
         if (showEditDatePicker) {
             val initialDate = editDate ?: System.currentTimeMillis()
             val datePickerState = rememberDatePickerState(initialSelectedDateMillis = initialDate)
-            DatePickerDialog(
+            AppDatePickerDialog(
                 onDismissRequest = { showEditDatePicker = false },
                 confirmButton = {
                     TextButton(onClick = {
@@ -339,7 +341,7 @@ fun BillScreen(
                 initialMinute = cal.get(Calendar.MINUTE),
                 is24Hour = true
             )
-            AlertDialog(
+            AppAlertDialog(
                 onDismissRequest = { showEditTimePicker = false },
                 title = { Text("选择时间") },
                 text = { TimePicker(state = timePickerState) },
@@ -364,7 +366,7 @@ fun BillScreen(
     }
 
     if (showCreateDialog) {
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = {
                 showCreateDialog = false
                 newBillItem = ""
@@ -455,7 +457,7 @@ fun BillScreen(
     if (showDatePickerDialog) {
         val initialDate = selectedDate ?: System.currentTimeMillis()
         val datePickerState = rememberDatePickerState(initialSelectedDateMillis = initialDate)
-        DatePickerDialog(
+        AppDatePickerDialog(
             onDismissRequest = { showDatePickerDialog = false },
             confirmButton = {
                 TextButton(onClick = {
@@ -489,7 +491,7 @@ fun BillScreen(
             initialMinute = cal.get(Calendar.MINUTE),
             is24Hour = true
         )
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = { showTimePickerDialog = false },
             title = { Text("选择时间") },
             text = { TimePicker(state = timePickerState) },

@@ -35,7 +35,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -167,7 +166,7 @@ private fun DrawerHeader() {
             painter = painterResource(R.drawable.ic_logo),
             contentDescription = "KeyNote Logo",
             modifier = Modifier.size(48.dp),
-            tint = Color.Unspecified
+            tint = colors.unspecified
         )
         Spacer(Modifier.width(12.dp))
         Column {
@@ -262,7 +261,7 @@ private fun DrawerNavItem(
                 .height(if (isSelected) 24.dp else 0.dp)
                 .background(
                     color = if (isSelected) colors.primary
-                            else Color.Transparent
+                            else colors.transparent
                 )
         )
 
@@ -318,7 +317,7 @@ private fun DrawerTagsItem(
                 .height(if (isSelected) 24.dp else 0.dp)
                 .background(
                     color = if (isSelected) colors.primary
-                            else Color.Transparent
+                            else colors.transparent
                 )
         )
 

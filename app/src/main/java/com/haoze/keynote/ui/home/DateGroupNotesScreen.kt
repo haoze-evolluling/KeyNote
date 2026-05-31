@@ -27,6 +27,7 @@ import android.content.ClipData
 
 import java.text.SimpleDateFormat
 import java.util.*
+import com.haoze.keynote.ui.theme.AppAlertDialog
 import com.haoze.keynote.ui.theme.LocalAppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -220,7 +221,7 @@ fun DateGroupNotesScreen(
 
     // ── 删除确认 ──
     if (showDeleteConfirm != null) {
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = { showDeleteConfirm = null },
             title = { Text("删除笔记") },
             text = { Text("确定要删除这篇笔记吗？删除后可在回收站中恢复。") },
@@ -243,7 +244,7 @@ fun DateGroupNotesScreen(
         val note = notes.find { it.note.id == showNoteDetailsForNote }
         if (note != null) {
             val dateFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()) }
-            AlertDialog(
+        AppAlertDialog(
                 onDismissRequest = { showNoteDetailsForNote = null },
                 title = { Text("笔记详情") },
                 text = {
@@ -277,7 +278,7 @@ fun DateGroupNotesScreen(
     // ── 添加标签弹窗 ──
     if (showAddTagForNote != null) {
         var tagName by remember { mutableStateOf("") }
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = { showAddTagForNote = null },
             title = { Text("添加标签") },
             text = {
@@ -307,7 +308,7 @@ fun DateGroupNotesScreen(
     // ── 管理标签弹窗 ──
     if (showManageTagsForNote != null) {
         val note = notes.find { it.note.id == showManageTagsForNote }
-        AlertDialog(
+        AppAlertDialog(
             onDismissRequest = { showManageTagsForNote = null },
             title = { Text("管理标签") },
             text = {

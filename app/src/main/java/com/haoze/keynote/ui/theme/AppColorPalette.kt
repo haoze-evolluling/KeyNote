@@ -41,7 +41,23 @@ object AppColorPalette {
         outlineVariant = Color(0xFFCAC4D0),
         background = Color(0xFFFDFCFF),
         onBackground = Color(0xFF1A1C1E),
-        
+
+        // 透明色
+        transparent = Color.Transparent,
+
+        // 阴影色
+        shadow = Color.Black.copy(alpha = 0.1f),
+
+        // 光晕渐变色（浅色模式：淡蓝色）
+        glowPrimary = Color(0xFF0593FF).copy(alpha = 0.15f),
+        glowSecondary = Color(0xFF5BC0FF).copy(alpha = 0.08f),
+
+        // 对话框背景色（浅色模式）
+        dialogContainer = Color(0xFFFDFCFF),
+
+        // 图标原始色
+        unspecified = Color.Unspecified,
+
         // 图表专用色
         chartColors = listOf(
             Color(0xFF0593FF), // 主色
@@ -88,7 +104,23 @@ object AppColorPalette {
         outlineVariant = Color(0xFF49454F),
         background = Color(0xFF1A1C1E),
         onBackground = Color(0xFFE3E2E6),
-        
+
+        // 透明色
+        transparent = Color.Transparent,
+
+        // 阴影色
+        shadow = Color.Black.copy(alpha = 0.1f),
+
+        // 光晕渐变色（深色模式：关闭）
+        glowPrimary = Color.Transparent,
+        glowSecondary = Color.Transparent,
+
+        // 对话框背景色（深色模式）
+        dialogContainer = Color(0xFF1A1C1E),
+
+        // 图标原始色
+        unspecified = Color.Unspecified,
+
         // 图表专用色
         chartColors = listOf(
             Color(0xFF9ECAFF), // 主色
