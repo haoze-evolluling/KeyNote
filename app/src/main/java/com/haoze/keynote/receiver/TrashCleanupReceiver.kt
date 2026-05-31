@@ -18,6 +18,8 @@ class TrashCleanupReceiver : BroadcastReceiver() {
                 val db = NoteDatabase.getDatabase(context)
                 val expireTime = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(30)
                 db.noteDao().deleteExpiredTrashNotes(expireTime)
+                db.billDao().deleteExpiredTrashBills(expireTime)
+                db.scheduleDao().deleteExpiredTrashSchedules(expireTime)
             } finally {
                 pendingResult.finish()
             }
