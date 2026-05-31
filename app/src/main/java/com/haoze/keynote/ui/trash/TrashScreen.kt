@@ -1,5 +1,6 @@
 package com.haoze.keynote.ui.trash
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -69,7 +70,12 @@ fun TrashScreen(
                 contentPadding = PaddingValues(vertical = 8.dp)
             ) {
                 items(deletedNotes, key = { it.note.id }) { noteWithTags ->
-                    Card(modifier = Modifier.fillMaxWidth()) {
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .border(1.dp, colors.outlineVariant, CardDefaults.shape),
+                        colors = CardDefaults.cardColors(containerColor = colors.surface)
+                    ) {
                         Column(modifier = Modifier.padding(16.dp)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(

@@ -1,6 +1,7 @@
 package com.haoze.keynote.ui.schedule
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
@@ -72,8 +73,13 @@ fun ScheduleScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { showCreateDialog = true }) {
-                Icon(Icons.Default.Add, contentDescription = "新建日程")
+            Box(modifier = Modifier.padding(bottom = 16.dp)) {
+                FloatingActionButton(
+                    onClick = { showCreateDialog = true },
+                    elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 0.dp)
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "新建日程")
+                }
             }
         }
     ) { innerPadding ->
@@ -114,7 +120,9 @@ fun ScheduleScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp)
-                                .combinedClickable(onClick = {}, onLongClick = { showActionDialogForSchedule = schedule.id })
+                                .border(1.dp, colors.outlineVariant, CardDefaults.shape)
+                                .combinedClickable(onClick = {}, onLongClick = { showActionDialogForSchedule = schedule.id }),
+                            colors = CardDefaults.cardColors(containerColor = colors.surface)
                         ) {
                             Row(
                                 modifier = Modifier.fillMaxWidth().padding(16.dp),

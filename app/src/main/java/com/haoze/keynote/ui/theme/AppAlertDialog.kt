@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -25,7 +26,7 @@ fun AppAlertDialog(
     iconContentColor: Color = LocalAppColors.current.onSurface,
     titleContentColor: Color = LocalAppColors.current.onSurface,
     textContentColor: Color = LocalAppColors.current.onSurfaceVariant,
-    tonalElevation: Dp = AlertDialogDefaults.TonalElevation,
+    tonalElevation: Dp = 0.dp,
     properties: DialogProperties = DialogProperties()
 ) {
     AlertDialog(

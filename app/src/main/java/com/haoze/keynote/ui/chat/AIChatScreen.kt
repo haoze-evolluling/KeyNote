@@ -12,7 +12,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Chat
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardReturn
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material.icons.outlined.Person
@@ -142,6 +141,7 @@ fun AIChatScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+                .clip(RoundedCornerShape(28.dp))
         ) {
             // 光晕渐变效果：从输入框方向向上扩散，覆盖整个内容区域
             if (messages.isEmpty() || glowAlpha > 0f) {
@@ -192,11 +192,19 @@ fun AIChatScreen(
                             color = colors.onSurface
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            "输入消息开始与 AI 对话",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = colors.outline
-                        )
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(
+                                "\"晚餐花了 15 块钱\"",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = colors.outline
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                "\"提醒我明天早上 10 点要上体育课\"",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = colors.outline
+                            )
+                        }
                     }
                 }
             } else {
@@ -378,20 +386,9 @@ fun AIChatScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 4.dp, vertical = 4.dp),
+                        .padding(horizontal = 12.dp, vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    IconButton(
-                        onClick = { /* TODO: Add attachment functionality */ },
-                        modifier = Modifier.size(40.dp)
-                    ) {
-                        Icon(
-                            Icons.Default.Add,
-                            contentDescription = "添加",
-                            tint = colors.onSurfaceVariant
-                        )
-                    }
-
                     TextField(
                         value = inputText,
                         onValueChange = { inputText = it },

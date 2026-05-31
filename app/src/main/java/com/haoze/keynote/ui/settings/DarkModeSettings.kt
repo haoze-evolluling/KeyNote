@@ -1,5 +1,6 @@
 package com.haoze.keynote.ui.settings
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
@@ -69,10 +70,15 @@ private fun DarkModeOption(
 
     Surface(
         onClick = onClick,
-        modifier = modifier,
+        modifier = modifier
+            .border(
+                1.dp,
+                if (selected) colors.primary else colors.outlineVariant,
+                MaterialTheme.shapes.medium
+            ),
         shape = MaterialTheme.shapes.medium,
         color = if (selected) colors.primaryContainer else colors.surface,
-        tonalElevation = if (selected) 0.dp else 1.dp
+        tonalElevation = 0.dp
     ) {
         Column(
             modifier = Modifier

@@ -21,6 +21,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.background
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -176,6 +177,7 @@ fun PushDrawerLayout(
             modifier = Modifier
                 .offset(x = with(density) { offsetPx.value.toDp() })
                 .fillMaxSize()
+                .clip(RoundedCornerShape(20.dp))
                 .background(colors.surface)
         ) {
             // 内层 Box：根据推拉进度实时缩放（1.0 → 0.88），锚点居左，形成"被推远"的视觉
@@ -188,6 +190,8 @@ fun PushDrawerLayout(
                         scaleX = contentScale
                         scaleY = contentScale
                         transformOrigin = TransformOrigin(0f, 0.5f)
+                        clip = true
+                        shape = RoundedCornerShape(20.dp)
                     }
             ) {
                 content()

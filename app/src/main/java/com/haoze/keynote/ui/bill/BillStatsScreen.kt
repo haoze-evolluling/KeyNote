@@ -1,5 +1,6 @@
 package com.haoze.keynote.ui.bill
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -235,7 +236,11 @@ private fun SummaryCard(
     modifier: Modifier = Modifier
 ) {
     val colors = LocalAppColors.current
-    Card(modifier = modifier) {
+    Card(
+        modifier = modifier
+            .border(1.dp, colors.outlineVariant, CardDefaults.shape),
+        colors = CardDefaults.cardColors(containerColor = colors.surface)
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()

@@ -80,6 +80,16 @@ fun EditNoteScreen(
         }
     }
 
+    LaunchedEffect(isSummarizing) {
+        if (!isSummarizing && showMenu) showMenu = false
+    }
+    LaunchedEffect(isGenerating) {
+        if (!isGenerating && showMenu) showMenu = false
+    }
+    LaunchedEffect(isPolishing) {
+        if (!isPolishing && showMenu) showMenu = false
+    }
+
     BackHandler {
         viewModel.saveNote { onNavigateBack() }
     }
@@ -177,11 +187,10 @@ fun EditNoteScreen(
                                     text = { Text("AI摘要") },
                                     onClick = {
                                         viewModel.summarizeNote()
-                                        showMenu = false
                                     },
                                     leadingIcon = {
                                         if (isSummarizing) {
-                                            CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
+                                            CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp, color = colors.primary)
                                         } else {
                                             Icon(Icons.Default.AutoAwesome, contentDescription = null, modifier = Modifier.size(18.dp))
                                         }
@@ -193,11 +202,10 @@ fun EditNoteScreen(
                                     text = { Text("AI标签") },
                                     onClick = {
                                         viewModel.generateTags()
-                                        showMenu = false
                                     },
                                     leadingIcon = {
                                         if (isGenerating) {
-                                            CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
+                                            CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp, color = colors.primary)
                                         } else {
                                             Icon(Icons.Default.Label, contentDescription = null, modifier = Modifier.size(18.dp))
                                         }
@@ -209,11 +217,10 @@ fun EditNoteScreen(
                                     text = { Text("AI润色") },
                                     onClick = {
                                         viewModel.polishNote()
-                                        showMenu = false
                                     },
                                     leadingIcon = {
                                         if (isPolishing) {
-                                            CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
+                                            CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp, color = colors.primary)
                                         } else {
                                             Icon(Icons.Default.AutoAwesome, contentDescription = null, modifier = Modifier.size(18.dp))
                                         }

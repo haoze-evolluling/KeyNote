@@ -1,6 +1,7 @@
 package com.haoze.keynote.ui.bill
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
@@ -91,8 +92,13 @@ fun BillScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { showCreateDialog = true }) {
-                Icon(Icons.Default.Add, contentDescription = "新建账单")
+            Box(modifier = Modifier.padding(bottom = 16.dp)) {
+                FloatingActionButton(
+                    onClick = { showCreateDialog = true },
+                    elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 0.dp)
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "新建账单")
+                }
             }
         }
     ) { innerPadding ->
@@ -527,10 +533,12 @@ private fun BillCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .border(1.dp, colors.outlineVariant, CardDefaults.shape)
             .combinedClickable(
                 onClick = {},
                 onLongClick = onLongClick
-            )
+            ),
+        colors = CardDefaults.cardColors(containerColor = colors.surface)
     ) {
         Row(
             modifier = Modifier

@@ -21,7 +21,7 @@ object AppColorPalette {
         // 表面色
         surface = Color(0xFFFDFCFF),
         onSurface = Color(0xFF1A1C1E),
-        surfaceVariant = Color(0xFFE7E0EC),
+        surfaceVariant = Color(0xFFDAE4EF),
         onSurfaceVariant = Color(0xFF49454F),
         
         // 功能色
@@ -84,7 +84,7 @@ object AppColorPalette {
         // 表面色
         surface = Color(0xFF1A1C1E),
         onSurface = Color(0xFFE3E2E6),
-        surfaceVariant = Color(0xFF49454F),
+        surfaceVariant = Color(0xFF2A3442),
         onSurfaceVariant = Color(0xFFCAC4D0),
         
         // 功能色
@@ -101,7 +101,7 @@ object AppColorPalette {
         
         // 中性色
         outline = Color(0xFF938F99),
-        outlineVariant = Color(0xFF49454F),
+        outlineVariant = Color(0xFF3A4450),
         background = Color(0xFF1A1C1E),
         onBackground = Color(0xFFE3E2E6),
 
@@ -142,22 +142,33 @@ fun AppColors.toMaterialColorScheme() = if (this == AppColorPalette.Light) {
         onSecondary = onSecondary,
         secondaryContainer = secondaryContainer,
         onSecondaryContainer = onSecondaryContainer,
-        surface = surface,
-        onSurface = onSurface,
-        surfaceVariant = surfaceVariant,
-        onSurfaceVariant = onSurfaceVariant,
-        error = error,
-        onError = onError,
-        errorContainer = errorContainer,
-        onErrorContainer = onErrorContainer,
         tertiary = tertiary,
         onTertiary = onTertiary,
         tertiaryContainer = tertiaryContainer,
         onTertiaryContainer = onTertiaryContainer,
+        error = error,
+        onError = onError,
+        errorContainer = errorContainer,
+        onErrorContainer = onErrorContainer,
+        background = background,
+        onBackground = onBackground,
+        surface = surface,
+        onSurface = onSurface,
+        surfaceVariant = surfaceVariant,
+        onSurfaceVariant = onSurfaceVariant,
         outline = outline,
         outlineVariant = outlineVariant,
-        background = background,
-        onBackground = onBackground
+        inverseSurface = onSurface,
+        inverseOnSurface = surface,
+        inversePrimary = primaryContainer,
+        surfaceDim = surfaceVariant,
+        surfaceBright = surface,
+        surfaceContainerLowest = surface,
+        surfaceContainerLow = surface,
+        surfaceContainer = surface,
+        surfaceContainerHigh = surface,
+        surfaceContainerHighest = surface,
+        scrim = Color.Black
     )
 } else {
     darkColorScheme(
@@ -169,21 +180,32 @@ fun AppColors.toMaterialColorScheme() = if (this == AppColorPalette.Light) {
         onSecondary = onSecondary,
         secondaryContainer = secondaryContainer,
         onSecondaryContainer = onSecondaryContainer,
-        surface = surface,
-        onSurface = onSurface,
-        surfaceVariant = surfaceVariant,
-        onSurfaceVariant = onSurfaceVariant,
-        error = error,
-        onError = onError,
-        errorContainer = errorContainer,
-        onErrorContainer = onErrorContainer,
         tertiary = tertiary,
         onTertiary = onTertiary,
         tertiaryContainer = tertiaryContainer,
         onTertiaryContainer = onTertiaryContainer,
+        error = error,
+        onError = onError,
+        errorContainer = errorContainer,
+        onErrorContainer = onErrorContainer,
+        background = background,
+        onBackground = onBackground,
+        surface = surface,
+        onSurface = onSurface,
+        surfaceVariant = surfaceVariant,
+        onSurfaceVariant = onSurfaceVariant,
         outline = outline,
         outlineVariant = outlineVariant,
-        background = background,
-        onBackground = onBackground
+        inverseSurface = onSurface,
+        inverseOnSurface = surface,
+        inversePrimary = primaryContainer,
+        surfaceDim = surface,
+        surfaceBright = surfaceVariant,
+        surfaceContainerLowest = surface,
+        surfaceContainerLow = surface,
+        surfaceContainer = surface,
+        surfaceContainerHigh = surfaceVariant,
+        surfaceContainerHighest = surfaceVariant,
+        scrim = Color.Black
     )
 }

@@ -1,5 +1,6 @@
 package com.haoze.keynote.ui.settings
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 
@@ -126,9 +127,11 @@ fun SettingsScreen(
                     val currentProviderName = activeProvider?.name ?: "未设置"
                     Surface(
                         onClick = onNavigateToProviderManage,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .border(1.dp, colors.outlineVariant, MaterialTheme.shapes.medium),
                         shape = MaterialTheme.shapes.medium,
-                        tonalElevation = 1.dp
+                        tonalElevation = 0.dp
                     ) {
                         Row(
                             modifier = Modifier

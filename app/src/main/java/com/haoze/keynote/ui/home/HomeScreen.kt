@@ -69,13 +69,18 @@ fun HomeScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-                scope.launch {
-                    val noteId = viewModel.createEmptyNote()
-                    onNavigateToEdit(noteId)
+            Box(modifier = Modifier.padding(bottom = 16.dp)) {
+                FloatingActionButton(
+                    onClick = {
+                        scope.launch {
+                            val noteId = viewModel.createEmptyNote()
+                            onNavigateToEdit(noteId)
+                        }
+                    },
+                    elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 0.dp)
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "新建笔记")
                 }
-            }) {
-                Icon(Icons.Default.Add, contentDescription = "新建笔记")
             }
         }
     ) { innerPadding ->
