@@ -12,5 +12,7 @@ data class ScheduleEntity(
     val location: String? = null,
     val description: String? = null,
     val noteId: Long? = null,
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+    val isDeleted: Boolean = false,
+    val deletedAt: Long? = null
 )
