@@ -16,8 +16,8 @@ android {
         applicationId = "com.haoze.keynote"
         minSdk = 30
         targetSdk = 36
-        versionCode = 11400
-        versionName = "1.14.0"
+        versionCode = 11600
+        versionName = "1.16.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
