@@ -93,9 +93,9 @@ class AIChatViewModel(application: Application) : AndroidViewModel(application) 
                 }
 
                 val api = apiManager.createApi()
-                val historyMessages = _messages.value.map { msg ->
-                    Message(role = msg.role, content = msg.content)
-                }
+                val historyMessages = _messages.value
+                    .filter { !it.content.startsWith("✅") && !it.content.startsWith("❌") }
+                    .map { msg -> Message(role = msg.role, content = msg.content) }
                 val currentTime = java.text.SimpleDateFormat(
                     "yyyy-MM-dd HH:mm", java.util.Locale.getDefault()
                 ).format(java.util.Date())
