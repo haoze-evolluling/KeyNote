@@ -34,7 +34,7 @@ class BillViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun deleteBill(bill: BillEntity) {
-        viewModelScope.launch { repository.deleteBill(bill) }
+        viewModelScope.launch { repository.softDelete(bill) }
     }
 
     fun createBill(item: String, amount: Double, date: Long, categoryId: Long? = null) {

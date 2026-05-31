@@ -50,7 +50,7 @@ class ScheduleViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun deleteSchedule(schedule: ScheduleEntity) {
-        viewModelScope.launch { scheduleRepository.deleteSchedule(schedule) }
+        viewModelScope.launch { scheduleRepository.softDelete(schedule) }
     }
 
     fun linkNote(scheduleId: Long, noteId: Long) {
