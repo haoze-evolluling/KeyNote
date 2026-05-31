@@ -72,6 +72,12 @@ interface BillDao {
     @Query("SELECT COUNT(*) FROM bills WHERE date BETWEEN :start AND :end")
     fun getBillCountInRange(start: Long, end: Long): Flow<Int>
 
+    @Query("SELECT * FROM bills WHERE date BETWEEN :start AND :end ORDER BY date DESC")
+    fun getBillsByDateRange(start: Long, end: Long): Flow<List<BillEntity>>
+
+    @Query("SELECT * FROM bills WHERE date BETWEEN :start AND :end AND categoryId IN (:categoryIds) ORDER BY date DESC")
+    fun getBillsByDateRangeAndCategory(start: Long, end: Long, categoryIds: List<Long>): Flow<List<BillEntity>>
+
     @Query("""
         SELECT strftime('%Y-%m-%d', b.date / 1000, 'unixepoch', 'localtime') as day,
                SUM(b.amount) as total

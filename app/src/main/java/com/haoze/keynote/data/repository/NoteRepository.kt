@@ -31,6 +31,12 @@ class NoteRepository(
 
     fun getNotesByTagId(tagId: Long): Flow<List<NoteWithTags>> = noteDao.getNotesByTagId(tagId)
 
+    fun getActiveNotesByDateRange(start: Long, end: Long): Flow<List<NoteWithTags>> =
+        noteDao.getActiveNotesByDateRange(start, end)
+
+    fun getActiveNotesByDateRangeAndTags(start: Long, end: Long, tagIds: List<Long>): Flow<List<NoteWithTags>> =
+        noteDao.getActiveNotesByDateRangeAndTags(start, end, tagIds)
+
     suspend fun createNote(title: String, content: String): Long {
         val note = NoteEntity(title = title, content = content)
         return noteDao.insertNote(note)

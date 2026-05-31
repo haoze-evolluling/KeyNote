@@ -13,7 +13,7 @@
 -keep,allowobfuscation interface * {
     @retrofit2.http.* <methods>;
 }
--keepclassmembers class com.example.keynote.data.remote.** { *; }
+-keepclassmembers class com.haoze.keynote.data.remote.** { *; }
 
 # --- OkHttp ---
 -dontwarn okhttp3.internal.platform.**

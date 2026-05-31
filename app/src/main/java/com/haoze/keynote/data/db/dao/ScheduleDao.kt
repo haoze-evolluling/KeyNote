@@ -20,4 +20,7 @@ interface ScheduleDao {
 
     @Delete
     suspend fun deleteSchedule(schedule: ScheduleEntity)
+
+    @Query("SELECT * FROM schedules WHERE date BETWEEN :start AND :end ORDER BY date ASC")
+    fun getSchedulesByDateRange(start: Long, end: Long): Flow<List<ScheduleEntity>>
 }

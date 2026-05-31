@@ -48,6 +48,26 @@ interface NoteDao {
     """)
     fun getNotesByTagId(tagId: Long): Flow<List<NoteWithTags>>
 
+    @Transaction
+    @Query("""
+        SELECT * FROM notes
+        WHERE isDeleted = 0 AND createdAt BETWEEN :start AND :end
+        ORDER BY createdAt DESC
+    """)
+    fun getActiveNotesByDateRange(start: Long, end: Long): Flow<List<NoteWithTags>>
+
+    @Transaction
+    @Query("""
+        SELECT * FROM notes
+        WHERE isDeleted = 0
+        AND createdAt BETWEEN :start AND :end
+        AND id IN (
+            SELECT noteId FROM note_tag_cross_ref WHERE tagId IN (:tagIds)
+        )
+        ORDER BY createdAt DESC
+    """)
+    fun getActiveNotesByDateRangeAndTags(start: Long, end: Long, tagIds: List<Long>): Flow<List<NoteWithTags>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(note: NoteEntity): Long
 

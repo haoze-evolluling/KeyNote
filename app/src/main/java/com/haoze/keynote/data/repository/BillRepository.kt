@@ -29,6 +29,18 @@ class BillRepository(
 
     suspend fun deleteBill(bill: BillEntity) = billDao.deleteBill(bill)
 
+    suspend fun getBillsByDateRange(start: Long, end: Long): List<BillEntity> {
+        var result = emptyList<BillEntity>()
+        billDao.getBillsByDateRange(start, end).first().let { result = it }
+        return result
+    }
+
+    suspend fun getBillsByDateRangeAndCategory(start: Long, end: Long, categoryIds: List<Long>): List<BillEntity> {
+        var result = emptyList<BillEntity>()
+        billDao.getBillsByDateRangeAndCategory(start, end, categoryIds).first().let { result = it }
+        return result
+    }
+
     fun getTotalSpending(): Flow<Double?> = billDao.getTotalSpending()
     fun getMonthlySpending(startOfMonth: Long): Flow<Double?> = billDao.getMonthlySpending(startOfMonth)
     fun getYearlySpending(startOfYear: Long): Flow<Double?> = billDao.getYearlySpending(startOfYear)

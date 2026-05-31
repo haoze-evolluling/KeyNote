@@ -31,11 +31,20 @@ class AiApiManager(private val preferencesManager: PreferencesManager) {
         return try {
             val type = object : TypeToken<List<AiProvider>>() {}.type
             val parsed = gson.fromJson<List<AiProvider>>(raw, type)
-            if (parsed.isEmpty()) seedDefaults() else parsed
+            if (parsed.isEmpty()) seedDefaults() else parsed.map { it.sanitize() }
         } catch (_: Exception) {
             seedDefaults()
         }
     }
+
+    private fun AiProvider.sanitize() = AiProvider(
+        id = id ?: "",
+        name = name ?: "",
+        baseUrl = baseUrl ?: "",
+        apiKey = apiKey ?: "",
+        modelName = modelName ?: "deepseek-v4-flash",
+        isBuiltin = isBuiltin
+    )
 
     private suspend fun seedDefaults(): List<AiProvider> {
         val defaults = defaultProviders()
@@ -51,7 +60,8 @@ class AiApiManager(private val preferencesManager: PreferencesManager) {
         return if (provider.isBuiltin && provider.id == "built-in") {
             KeyObfuscator.builtinZidaipass
         } else {
-            if (provider.apiKey.isBlank()) "" else KeyObfuscator.openUserZidaipass(provider.apiKey)
+            val key = provider.apiKey
+            if (key.isBlank()) "" else KeyObfuscator.openUserZidaipass(key)
         }
     }
 
