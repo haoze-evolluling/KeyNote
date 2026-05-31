@@ -69,7 +69,7 @@ fun HomeScreen(
             )
         },
         floatingActionButton = {
-            Box(modifier = Modifier.padding(bottom = 16.dp)) {
+            Box(modifier = Modifier.padding(bottom = 64.dp)) {
                 FloatingActionButton(
                     onClick = {
                         scope.launch {
