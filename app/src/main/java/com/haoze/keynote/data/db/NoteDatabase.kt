@@ -20,7 +20,7 @@ import com.haoze.keynote.data.db.entity.TagEntity
 
 @Database(
     entities = [NoteEntity::class, TagEntity::class, NoteTagCrossRef::class, BillEntity::class, ScheduleEntity::class, CategoryEntity::class],
-    version = 9,
+    version = 10,
     exportSchema = false
 )
 abstract class NoteDatabase : RoomDatabase() {
@@ -112,13 +112,22 @@ abstract class NoteDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_9_10 = object : Migration(9, 10) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE bills ADD COLUMN isDeleted INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE bills ADD COLUMN deletedAt INTEGER DEFAULT NULL")
+                db.execSQL("ALTER TABLE schedules ADD COLUMN isDeleted INTEGER NOT NULL DEFAULT 0")
+                db.execSQL("ALTER TABLE schedules ADD COLUMN deletedAt INTEGER DEFAULT NULL")
+            }
+        }
+
         fun getDatabase(context: Context): NoteDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     NoteDatabase::class.java,
                     "keynote_database"
-                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9)
+                ).addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10)
                     .build()
                 INSTANCE = instance
                 instance
