@@ -27,7 +27,13 @@ class BillRepository(
 
     suspend fun updateBill(bill: BillEntity) = billDao.updateBill(bill)
 
-    suspend fun deleteBill(bill: BillEntity) = billDao.deleteBill(bill)
+    suspend fun softDelete(bill: BillEntity) = billDao.softDeleteBill(bill.id)
+
+    suspend fun restore(bill: BillEntity) = billDao.restoreBill(bill.id)
+
+    suspend fun permanentlyDelete(bill: BillEntity) = billDao.deleteBill(bill)
+
+    fun getAllDeletedBills(): Flow<List<BillEntity>> = billDao.getAllDeletedBills()
 
     suspend fun getBillsByDateRange(start: Long, end: Long): List<BillEntity> {
         var result = emptyList<BillEntity>()

@@ -17,7 +17,13 @@ class ScheduleRepository(private val scheduleDao: ScheduleDao) {
 
     suspend fun updateSchedule(schedule: ScheduleEntity) = scheduleDao.updateSchedule(schedule)
 
-    suspend fun deleteSchedule(schedule: ScheduleEntity) = scheduleDao.deleteSchedule(schedule)
+    suspend fun softDelete(schedule: ScheduleEntity) = scheduleDao.softDeleteSchedule(schedule.id)
+
+    suspend fun restore(schedule: ScheduleEntity) = scheduleDao.restoreSchedule(schedule.id)
+
+    suspend fun permanentlyDelete(schedule: ScheduleEntity) = scheduleDao.deleteSchedule(schedule)
+
+    fun getAllDeletedSchedules(): Flow<List<ScheduleEntity>> = scheduleDao.getAllDeletedSchedules()
 
     fun getSchedulesByDateRange(start: Long, end: Long): Flow<List<ScheduleEntity>> =
         scheduleDao.getSchedulesByDateRange(start, end)
