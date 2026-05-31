@@ -9,7 +9,7 @@ interface ScheduleDao {
     @Insert
     suspend fun insertSchedule(schedule: ScheduleEntity): Long
 
-    @Query("SELECT * FROM schedules ORDER BY date ASC")
+    @Query("SELECT * FROM schedules WHERE isDeleted = 0 ORDER BY date ASC")
     fun getAllSchedules(): Flow<List<ScheduleEntity>>
 
     @Query("SELECT * FROM schedules WHERE id = :id")
@@ -21,6 +21,18 @@ interface ScheduleDao {
     @Delete
     suspend fun deleteSchedule(schedule: ScheduleEntity)
 
-    @Query("SELECT * FROM schedules WHERE date BETWEEN :start AND :end ORDER BY date ASC")
+    @Query("SELECT * FROM schedules WHERE isDeleted = 0 AND date BETWEEN :start AND :end ORDER BY date ASC")
     fun getSchedulesByDateRange(start: Long, end: Long): Flow<List<ScheduleEntity>>
+
+    @Query("UPDATE schedules SET isDeleted = 1, deletedAt = :deletedAt WHERE id = :id")
+    suspend fun softDeleteSchedule(id: Long, deletedAt: Long = System.currentTimeMillis())
+
+    @Query("UPDATE schedules SET isDeleted = 0, deletedAt = NULL WHERE id = :id")
+    suspend fun restoreSchedule(id: Long)
+
+    @Query("SELECT * FROM schedules WHERE isDeleted = 1 ORDER BY deletedAt DESC")
+    fun getAllDeletedSchedules(): Flow<List<ScheduleEntity>>
+
+    @Query("DELETE FROM schedules WHERE isDeleted = 1 AND deletedAt < :expireTime")
+    suspend fun deleteExpiredTrashSchedules(expireTime: Long)
 }
